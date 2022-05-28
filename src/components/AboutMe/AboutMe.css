@@ -1,0 +1,69 @@
+.about-me {
+    hheight: 606px;
+    background-color: #202020;
+}
+
+.about-me__heading {
+    padding-top: 110px;
+}
+
+.about-me__student-info {
+    margin: 66px 70px 0;
+    display: flex;
+    justify-content: space-between;
+}
+
+.about-me__student-name {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 50px;
+    line-height: 58px;
+    letter-spacing: -0.04em;
+    color: #FFFFFF;
+    margin: 0;
+}
+
+.about-me__student-profession {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 20px;
+    color: #FFFFFF;
+    mix-blend-mode: normal;
+    margin: 18px 0 0;
+}
+
+.about-me__student-text {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 22px;
+    color: #FFFFFF;
+    mix-blend-mode: normal;
+    max-width: 600px;
+    margin: 26px 0 0;
+}
+
+.about-me__student-links {
+    margin: 99px 0 0;
+}
+
+.about-me__student-link {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    color: #FFFFFF;
+    text-decoration: none;
+    margin: 0 20px 0 0;
+}
+
+.about-me__avatar {
+    border-radius: 10px;
+    width: 270px;
+    height: 327px;
+}
