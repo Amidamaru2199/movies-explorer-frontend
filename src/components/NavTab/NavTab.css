@@ -5,7 +5,6 @@
 }
 
 .nav-tab {
-    height: 608px;
     background-color: #202020;
 }
 
@@ -51,4 +50,146 @@
     max-width: 550px;
     margin: 26px 0 0;
     order: 1;
+}
+
+.nav-tab__timetable {
+    height: 36px;
+    margin: 110px 70px 0;
+    background-color: #303030;
+    display: flex;
+}
+
+.nav-tab__timetable:last-of-type {
+    margin-top: 14px;
+    background-color: transparent;
+    padding-bottom: 81px;
+}
+
+.nav-tab__times-back {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    text-align: center;
+    color: #000000;
+    width: 20%;
+    background: #3DDC84;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.nav-tab__times-front {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    text-align: center;
+    color: #FFFFFF;
+    margin: auto;
+}
+
+.nav-tab__stage {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    text-align: center;
+    color: #8B8B8B;
+    margin: 0;
+    width: 20%;
+}
+
+.nav-tab__stage:last-of-type {
+    margin: 0 auto;
+}
+
+@media screen and (max-width: 910px) {
+    .heading {
+        margin: 0px 50px;
+        padding-top: 90px;
+    }
+
+    .nav-tab__table {
+        margin: 70px 50px 0px;
+        column-gap: 26px;
+    }
+
+    .nav-tab__text {
+        font-size: 12px;
+        line-height: 18px;
+        margin-top: 22px;
+    }
+
+    .nav-tab__timetable {
+        margin: 93px 50px 0;
+    }
+
+    .nav-tab__timetable:last-of-type {
+        padding-bottom: 71px;
+    }
+
+}
+
+@media screen and (max-width: 486px) {
+    .heading {
+        margin: 0px 18px;
+        padding-top: 70px;
+        padding-bottom: 28px;
+        font-size: 18px;
+        line-height: 22px;
+    }
+
+    .nav-tab__table {
+        margin: 60px 18px 0px;
+        column-gap: 0;
+        display: block;
+    }
+
+    .nav-tab__text {
+        font-size: 11px;
+        line-height: 16px;
+        margin-top: 16px;
+    }
+
+    .nav-tab__title {
+        font-size: 18px;
+        line-height: 22px;
+
+    }
+
+    .nav-tab__title:last-of-type {
+        margin-top: 56px;
+    }
+
+    .nav-tab__timetable {
+        margin: 60px 18px 0;
+        height: 35px;
+    }
+
+    .nav-tab__timetable:last-of-type {
+        margin-top: 10px;
+    }
+
+    .nav-tab__times-back {
+        font-size: 11px;
+        line-height: 13px;
+        width: 35.2%;
+    }
+
+
+    .nav-tab__times-front {
+        font-size: 11px;
+        line-height: 13px;
+    }
+
+    .nav-tab__stage {
+        font-size: 11px;
+        line-height: 13px;
+        width: 35.2%;
+    }
 }

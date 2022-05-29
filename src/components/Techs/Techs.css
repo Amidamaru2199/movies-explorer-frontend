@@ -57,3 +57,71 @@
 .techs__heading {
     padding-top: 100px;
 }
+
+@media screen and (max-width: 910px) {
+    .techs__heading {
+        padding-top: 90px;
+    }
+
+    .techs__title {
+        margin-top: 80px;
+    }
+
+    .techs__subtitle {
+        font-size: 12px;
+        line-height: 18px;
+        margin-top: 22px;
+    }
+
+    .techs__icon {
+        font-size: 12px;
+        line-height: 15px;
+        width: 84px;
+        height: 57px;
+    }
+
+    .techs__technology {
+        margin: 83px 60px 0;
+        padding-bottom: 90px;
+    }
+}
+
+@media screen and (max-width: 486px) {
+    .techs {
+        background-color: #202020;
+    }
+
+    .techs__heading {
+        padding-top: 47px;
+        border-bottom: 1px solid #000000;
+        ;
+    }
+
+    .techs__technology {
+        column-gap: 10px;
+        row-gap: 10px;
+        flex-wrap: wrap;
+        margin-top: 50px;
+    }
+
+    .techs__title {
+        margin-top: 60px;
+        font-size: 30px;
+        line-height: 36px;
+    }
+
+    .techs__subtitle {
+        margin-left: 18px;
+        margin-right: 18px;
+        font-size: 11px;
+        line-height: 16px;
+    }
+}
+
+@media screen and (max-width: 320px) {
+    .techs__technology {
+        margin-left: 71px;
+        margin-right: 71px;
+        justify-content: flex-start;
+    }
+}

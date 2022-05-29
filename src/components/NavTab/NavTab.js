@@ -13,6 +13,14 @@ function NavTab() {
                 <h3 className='nav-tab__title'>На выполнение диплома ушло 5 недель</h3>
                 <p className='nav-tab__text'>У каждого этапа был мягкий и жёсткий дедлайн, которые нужно было соблюдать, чтобы успешно защититься.</p>
             </div>
+            <div className='nav-tab__timetable'>
+                <p className='nav-tab__times-back'>1 неделя</p>
+                <p className='nav-tab__times-front'>4 недели</p>
+            </div>
+            <div className='nav-tab__timetable'>
+                <p className='nav-tab__stage'>Back-end</p>
+                <p className='nav-tab__stage'>Front-end</p>
+            </div>
         </section>
 
     );

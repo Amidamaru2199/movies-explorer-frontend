@@ -1,5 +1,4 @@
 .about-me {
-    hheight: 606px;
     background-color: #202020;
 }
 
@@ -66,4 +65,100 @@
     border-radius: 10px;
     width: 270px;
     height: 327px;
+    object-fit: cover;
+}
+
+@media screen and (max-width: 910px) {
+    .about-me__heading {
+        padding-top: 90px;
+    }
+
+    .about-me__student-info {
+        margin: 66px 50px 0;
+    }
+
+    .about-me__student-text {
+        font-size: 12px;
+        line-height: 18px;
+        max-width: 355px;
+        margin-top: 22px
+    }
+
+    .about-me__student-profession {
+        font-size: 12px;
+        line-height: 18px;
+    }
+
+    .about-me__student-name {
+        font-size: 40px;
+        line-height: 40px;
+    }
+
+    .about-me__avatar {
+        width: 255px;
+        height: 307px;
+        margin-left: 10px;
+    }
+
+    .about-me__student-links {
+        margin-top: 85px;
+    }
+
+}
+
+@media screen and (max-width: 624px) {
+    .about-me__heading {
+        padding-top: 70px;
+        margin-left: 14px;
+        margin-right: 14px;
+    }
+
+    .about-me__student-info {
+        flex-direction: column-reverse;
+        align-items: center;
+        text-align: center;
+        margin: 60px 14px 0;
+    }
+
+    .about-me__avatar {
+        width: 292px;
+        height: 352px;
+        margin-left: 0;
+    }
+
+    .about-me__student-name {
+        font-size: 30px;
+        line-height: 36px;
+        margin-top: 40px;
+    }
+
+    .about-me__student-profession {
+        font-size: 11px;
+        line-height: 16px;
+        margin-top: 20px;
+    }
+
+    .about-me__student-text {
+        font-size: 11px;
+        line-height: 16px;
+        max-width: 480px;
+        margin-top: 20px;
+    }
+
+    .about-me__student-links {
+        margin-top: 40px;
+    }
+
+    .about-me__student-link {
+        margin-right: 26px;
+    }
+}
+
+@media screen and (max-width: 624px) {
+    .about-me__student-info {
+        flex-direction: column-reverse;
+        align-items: center;
+        text-align: left;
+        margin: 60px 14px 0;
+    }
 }

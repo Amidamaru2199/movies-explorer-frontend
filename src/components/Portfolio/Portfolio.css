@@ -41,3 +41,23 @@
 }
 
 .portfolio__link {}
+
+@media screen and (max-width: 910px) {
+    .portfolio__title {
+        margin-left: 50px;
+        padding: 90px 0 0;
+    }
+
+    .portfolio__link-container {
+        margin: 20px 50px 0;
+    }
+
+    .portfolio__link-text {
+        font-size: 28px;
+        line-height: 50px;
+    }
+
+    .portfolio__link-container:last-of-type {
+        padding: 0 0 90px;
+    }
+}
