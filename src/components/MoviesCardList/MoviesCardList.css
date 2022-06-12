@@ -1,0 +1,112 @@
+.movies-card-list {
+    background-color: #202020;
+}
+
+.movies-card-list__container {
+    max-width: 1280px;
+    margin: 0 auto;
+}
+
+.movies-card-list__cards {
+    margin: 0 70px;
+    padding: 116px 0 60px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 270px);
+    grid-column-gap: 20px;
+    grid-row-gap: 38px;
+    justify-content: center;
+}
+
+.card {
+    position: relative;
+}
+
+.card__like-button {
+    background-image: url('../../images/like.svg');
+    width: 24px;
+    height: 24px;
+    border: 0px;
+    border-radius: 50%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: #313131;
+    position: absolute;
+    right: 0;
+    bottom: 45px;
+}
+
+.card__image {
+    width: 270px;
+    height: 151px;
+}
+
+.card__text {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 16px;
+    color: #FFFFFF;
+    margin: 11px 0 0;
+}
+
+.card__duration {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 11px;
+    line-height: 13px;
+    color: #8B8B8B;
+    border-top: 1px solid #424242;
+    padding-top: 6px;
+    margin: 29px 0 0;
+}
+
+.movies-card-list__continuation-button {
+    border: none;
+    width: -webkit-fill-available;
+    margin: 0 70px 97px;
+    background: #2F2F2F;
+    border-radius: 6px;
+    height: 36px;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 15px;
+    color: #FFFFFF;
+}
+
+@media screen and (max-width: 910px) {
+    .movies-card-list__cards {
+        margin: 0 30px;
+        grid-template-columns: repeat(auto-fit, 339px);
+        grid-column-gap: 30px;
+        grid-row-gap: 30px;
+    }
+
+    .card__image {
+        width: 339px;
+        height: 190px;
+    }
+
+    .movies-card-list__continuation-button {
+        margin: 0 30px 50px;
+    }
+}
+
+@media screen and (max-width: 486px) {
+    .card__image {
+        width: 300px;
+        height: 168px;
+    }
+
+    .card {
+        width: 300px;
+        margin: auto;
+    }
+
+    .movies-card-list__continuation-button {
+        margin: 0 14px 50px;
+    }
+}

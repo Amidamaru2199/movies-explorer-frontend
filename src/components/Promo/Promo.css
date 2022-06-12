@@ -6,8 +6,13 @@
 
 .promo {
     background-color: #073042;
+}
+
+.promo__container {
     display: flex;
     justify-content: space-between;
+    max-width: 1280px;
+    margin: 0 auto;
 }
 
 .promo__info {
@@ -60,7 +65,7 @@
 }
 
 @media screen and (max-width: 910px) {
-    .promo {
+    .promo__container {
         flex-direction: column-reverse;
         align-items: center;
     }

@@ -8,6 +8,11 @@
     background-color: #202020;
 }
 
+.nav-tab__container {
+    max-width: 1280px;
+    margin: 0 auto;
+}
+
 .heading {
     font-family: 'Inter', Arial, sans-serif;
     font-style: normal;
@@ -62,7 +67,7 @@
 .nav-tab__timetable:last-of-type {
     margin-top: 14px;
     background-color: transparent;
-    padding-bottom: 81px;
+    padding-bottom: 92px;
 }
 
 .nav-tab__times-back {
