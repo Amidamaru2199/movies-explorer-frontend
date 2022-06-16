@@ -68,3 +68,9 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+## Доменная ссылка
+<https://filmcatalog.frontend.nomoredomains.xyz>
+
+## Ссылка на макет
+<https://www.figma.com/proto/skJkQxJfkYcTgItkUBm1me/Diploma-(Copy)?page-id=891%3A3857&node-id=932%3A3806&viewport=400%2C352%2C0.1&scaling=min-zoom>
