@@ -1,0 +1,78 @@
+@font-face {
+    font-family: 'Inter';
+    src: url(../../vendor/fonts/Inter-Medium.woff);
+    src: url(../../vendor/fonts/Inter-Medium.woff2);
+}
+
+@font-face {
+    font-family: 'Inter';
+    src: url(../../vendor/fonts/Inter-Regular.woff);
+    src: url(../../vendor/fonts/Inter-Regular.woff2);
+}
+
+.profile {
+    background-color: #202020;
+    height: 100vh
+}
+
+.profile__container {
+    max-width: 396px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.profile__title {
+    font-family: 'Inter', Arial, sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 29px;
+    text-align: center;
+    color: #FFFFFF;
+    margin: 74px 0 118px;
+}
+
+.profile__div {
+    display: flex;
+    justify-content: space-between;
+    margin: 0 30px;
+}
+
+.profile__div:first-of-type {
+    border-bottom: 1px solid #424242;
+}
+
+.profile__p {
+    font-family: 'Inter', Arial, sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 11px;
+    line-height: 13px;
+    color: #FFFFFF;
+    margin: 15px 0;
+}
+
+.profile__edit-button {
+    font-family: 'Inter', Arial, sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 11px;
+    line-height: 13px;
+    color: #FFFFFF;
+    text-align: center;
+    text-decoration: none;
+    margin-top: 205px;
+}
+
+.profile__exit-button {
+    font-family: 'Inter', Arial, sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 16px;
+    text-align: center;
+    color: #EE3465;
+    text-decoration: none;
+    margin-top: 16px;
+}

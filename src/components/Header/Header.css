@@ -4,12 +4,6 @@
     src: url(../../vendor/fonts/Inter-Medium.woff2);
 }
 
-@font-face {
-    font-family: 'Inter';
-    src: url(../../vendor/fonts/Inter-Regular.woff);
-    src: url(../../vendor/fonts/Inter-Regular.woff2);
-}
-
 .header {
     background-color: #073042;
 }
@@ -44,8 +38,10 @@
     font-style: normal;
     font-weight: 500;
     font-size: 12px;
-    line-height: 16px;
+    line-height: 32px;
     color: #000000;
+    text-decoration: none;
+    text-align: center;
 }
 
 .header__signup-button {
@@ -58,6 +54,7 @@
     font-weight: 500;
     font-size: 12px;
     line-height: 16px;
+    text-decoration: none;
 }
 
 @media screen and (max-width: 910px) {

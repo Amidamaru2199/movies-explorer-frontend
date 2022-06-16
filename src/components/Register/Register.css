@@ -1,3 +1,15 @@
+@font-face {
+    font-family: 'Inter';
+    src: url(../../vendor/fonts/Inter-Medium.woff);
+    src: url(../../vendor/fonts/Inter-Medium.woff2);
+}
+
+@font-face {
+    font-family: 'Inter';
+    src: url(../../vendor/fonts/Inter-Regular.woff);
+    src: url(../../vendor/fonts/Inter-Regular.woff2);
+}
+
 .register {
     background-color: #202020;
     height: 100vh
@@ -17,7 +29,7 @@
 }
 
 .register__title {
-    font-family: 'Inter';
+    font-family: 'Inter', Arial, sans-serif;
     font-style: normal;
     font-weight: 500;
     font-size: 24px;
@@ -27,7 +39,7 @@
 }
 
 .register__input-name {
-    font-family: 'Inter';
+    font-family: 'Inter', Arial, sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: 10px;
@@ -41,7 +53,7 @@
     border: none;
     border-radius: 8px;
     padding: 14px 15px;
-    font-family: 'Inter';
+    font-family: 'Inter', Arial, sans-serif;
     font-style: normal;
     font-weight: 500;
     font-size: 13px;
@@ -54,7 +66,7 @@
     border: none;
     border-radius: 3px;
     height: 45px;
-    font-family: 'Inter';
+    font-family: 'Inter', Arial, sans-serif;
     font-style: normal;
     font-weight: 500;
     font-size: 14px;
@@ -71,7 +83,7 @@
 }
 
 .register__signin-text {
-    font-family: 'Inter';
+    font-family: 'Inter', Arial, sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: 14px;
@@ -82,7 +94,7 @@
 }
 
 .register__login-link {
-    font-family: 'Inter';
+    font-family: 'Inter', Arial, sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: 14px;
@@ -92,4 +104,38 @@
     color: #4285F4;
     align-self: center;
     margin-left: 6px;
+}
+
+@media screen and (max-width: 486px) {
+    .register__logo {
+        margin: 56px auto 0;
+    }
+
+    .register__title {
+        margin: 50px auto 60px;
+    }
+
+    .register__input-name {
+        margin: 20px 30px 10px;
+    }
+
+    .input {
+        margin: 0 30px;
+    }
+
+    .register__button {
+        margin: 185px 30px 0;
+        font-size: 12px;
+        line-height: 15px;
+    }
+
+    .register__signin-text {
+        font-size: 12px;
+        line-height: 15px;
+    }
+
+    .register__login-link {
+        font-size: 12px;
+        line-height: 15px;
+    }
 }

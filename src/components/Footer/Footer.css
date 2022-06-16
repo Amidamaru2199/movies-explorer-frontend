@@ -1,3 +1,9 @@
+@font-face {
+    font-family: 'Inter';
+    src: url(../../vendor/fonts/Inter-Regular.woff);
+    src: url(../../vendor/fonts/Inter-Regular.woff2);
+}
+
 .footer {
     background-color: #202020;
 }
@@ -8,7 +14,7 @@
 }
 
 .footer__title {
-    font-family: 'Inter';
+    font-family: 'Inter', Arial, sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: 13px;
@@ -28,7 +34,7 @@
 }
 
 .footer__copyrate {
-    font-family: 'Inter';
+    font-family: 'Inter', Arial, sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: 13px;
@@ -42,7 +48,7 @@
 }
 
 .footer__link {
-    font-family: 'Inter';
+    font-family: 'Inter', Arial, sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: 13px;
@@ -71,9 +77,19 @@
 }
 
 @media screen and (max-width: 486px) {
+    .footer__container {
+        margin: 0 10px;
+    }
+
+    .footer__title {
+        font-size: 12px;
+        line-height: 15px;
+        padding-top: 39px;
+    }
+
     .footer__nav {
         margin: 20px 14px 0;
-        padding-bottom: 14px;
+        padding-bottom: 7px;
         flex-direction: column-reverse;
     }
 
@@ -90,5 +106,12 @@
 
     .footer__copyrate {
         margin: 30px auto 0;
+        font-size: 12px;
+        line-height: 15px;
+    }
+
+    .footer__link {
+        font-size: 12px;
+        line-height: 15px;
     }
 }

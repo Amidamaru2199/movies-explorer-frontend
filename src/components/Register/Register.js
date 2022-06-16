@@ -2,6 +2,7 @@ import React from 'react';
 import '../../vendor/normalize.css';
 import './Register.css';
 import logo from '../../images/logo.svg';
+import { Link } from 'react-router-dom';
 
 function Register() {
     return (
@@ -23,7 +24,7 @@ function Register() {
                 <button className='register__button'>Зарегистрироваться</button>
                 <div className="register__signin">
                     <p className="register__signin-text">Уже зарегистрированы?</p>
-                    <a to="/sign-in" className="register__login-link">Войти</a>
+                    <Link to='/sign-in' className="register__login-link">Войти</Link>
                 </div>
             </div>
         </section>

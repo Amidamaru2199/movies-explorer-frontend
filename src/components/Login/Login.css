@@ -1,3 +1,15 @@
+@font-face {
+    font-family: 'Inter';
+    src: url(../../vendor/fonts/Inter-Medium.woff);
+    src: url(../../vendor/fonts/Inter-Medium.woff2);
+}
+
+@font-face {
+    font-family: 'Inter';
+    src: url(../../vendor/fonts/Inter-Regular.woff);
+    src: url(../../vendor/fonts/Inter-Regular.woff2);
+}
+
 .login {
     background-color: #202020;
     height: 100vh
@@ -17,7 +29,7 @@
 }
 
 .login__title {
-    font-family: 'Inter';
+    font-family: 'Inter', Arial, sans-serif;
     font-style: normal;
     font-weight: 500;
     font-size: 24px;
@@ -27,7 +39,7 @@
 }
 
 .login__input-name {
-    font-family: 'Inter';
+    font-family: 'Inter', Arial, sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: 10px;
@@ -54,7 +66,7 @@
     border: none;
     border-radius: 3px;
     height: 45px;
-    font-family: 'Inter';
+    font-family: 'Inter', Arial, sans-serif;
     font-style: normal;
     font-weight: 500;
     font-size: 14px;
@@ -71,7 +83,7 @@
 }
 
 .login__signup-text {
-    font-family: 'Inter';
+    font-family: 'Inter', Arial, sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: 14px;
@@ -81,8 +93,8 @@
     margin: 0;
 }
 
-.register__register-link {
-    font-family: 'Inter';
+.login__register-link {
+    font-family: 'Inter', Arial, sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: 14px;
@@ -92,4 +104,38 @@
     color: #4285F4;
     align-self: center;
     margin-left: 6px;
+}
+
+@media screen and (max-width: 486px) {
+    .login__logo {
+        margin: 56px auto 0;
+    }
+
+    .login__title {
+        margin: 50px auto 60px;
+    }
+
+    .login__input-name {
+        margin: 20px 30px 10px;
+    }
+
+    .input {
+        margin: 0 30px;
+    }
+
+    .login__button {
+        margin: 271px 30px 0;
+        font-size: 12px;
+        line-height: 15px;
+    }
+
+    .login__signup-text {
+        font-size: 12px;
+        line-height: 15px;
+    }
+
+    .login__register-link {
+        font-size: 12px;
+        line-height: 15px;
+    }
 }

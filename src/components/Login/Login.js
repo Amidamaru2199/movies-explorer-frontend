@@ -2,6 +2,7 @@ import React from 'react';
 import '../../vendor/normalize.css';
 import './Login.css';
 import logo from '../../images/logo.svg';
+import { Link } from 'react-router-dom';
 
 function Login() {
     return (
@@ -9,7 +10,7 @@ function Login() {
         <section className="login">
             <div className='login__container'>
                 <img className="login__logo" src={logo} alt="Лого" />
-                <h1 className='login__title'>Добро пожаловать!</h1>
+                <h1 className='login__title'>Рады видеть!</h1>
 
                 <p className='login__input-name'>E-mail</p>
                 <input className='login__email-input login__input input' />
@@ -20,7 +21,7 @@ function Login() {
                 <button className='login__button'>Войти</button>
                 <div className="login__signup">
                     <p className="login__signup-text">Ещё не зарегистрированы?</p>
-                    <a to="/sign-in" className="register__register-link">Регистрация</a>
+                    <Link to="/sign-up" className="login__register-link">Регистрация</Link>
                 </div>
             </div>
         </section>

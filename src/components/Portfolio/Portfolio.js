@@ -10,13 +10,16 @@ function Portfolio() {
             <div className='portfolio__container'>
                 <h3 className='portfolio__title'>Портфолио</h3>
                 <div className='portfolio__link-container'>
-                    <p className='portfolio__link-text'>Статичный сайт<a className='portfolio__link' href='https://github.com'><img className='portfolio__link-img' src={strelka} alt='ссылка' /></a></p>
+                    <a className='portfolio__link' href='https://github.com/Amidamaru2199/how-to-learn.git'>Статичный сайт</a>
+                    <img className='portfolio__link-img' src={strelka} alt='ссылка' />
                 </div>
                 <div className='portfolio__link-container'>
-                    <p className='portfolio__link-text'>Адаптивный сайт<a className='portfolio__link' href='https://github.com'><img className='portfolio__link-img' src={strelka} alt='ссылка' /></a></p>
+                    <a className='portfolio__link' href='https://github.com/Amidamaru2199/russian-travel.git'>Адаптивный сайт</a>
+                    <img className='portfolio__link-img' src={strelka} alt='ссылка' />
                 </div>
                 <div className='portfolio__link-container'>
-                    <p className='portfolio__link-text'>Одностраничное приложение<a className='portfolio__link' href='https://github.com'><img className='portfolio__link-img' src={strelka} alt='ссылка' /></a></p>
+                    <a className='portfolio__link' href='https://github.com/Amidamaru2199/express-mesto-gha.git'>Одностраничное приложение</a>
+                    <img className='portfolio__link-img' src={strelka} alt='ссылка' />
                 </div>
             </div>
         </section>

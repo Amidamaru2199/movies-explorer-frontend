@@ -2,19 +2,20 @@ import React from "react";
 import "./FilmsHeader.css";
 import logo from '../../images/logo.svg';
 import account from '../../images/account.svg';
+import { Link } from "react-router-dom";
 
 
 function FilmsHeader() {
     return (
 
-        <header className="header">
-            <div className="header__container">
-                <img className="header__logo" src={logo} alt="Лого" />
-                <div className="header__elements">
-                    <a className="header__films" href='https://github.com'>Фильмы</a>
-                    <a className="header__saved-films" href='https://github.com'>Сохранённые фильмы</a>
-                    <a className="header__account" href='https://github.com'>Аккаунт</a>
-                    <img className="header__account-icon" src={account} alt='Иконка аккаунта' />
+        <header className="films-header">
+            <div className="films-header__container">
+                <img className="films-header__logo" src={logo} alt="Лого" />
+                <div className="films-header__elements">
+                    <Link to='/movies' className="films-header__films">Фильмы</Link>
+                    <Link to='/saved-movies' className="films-header__saved-films">Сохранённые фильмы</Link>
+                    <Link to='/profile' className="films-header__account">Аккаунт</Link>
+                    <img className="films-header__account-icon" src={account} alt='Иконка аккаунта' />
                 </div>
                 <div class="hamburger-menu header__hamburger-menu">
                     <input id="menu__toggle" type="checkbox" />
@@ -22,17 +23,17 @@ function FilmsHeader() {
                         <span></span>
                     </label>
 
-                    <ul class="hamburger-menu__box">
-                        <li><a class="hamburger-menu__item" href='https://github.com'>Главная</a></li>
-                        <li><a class="hamburger-menu__films" href='https://github.com'>Фильмы</a></li>
-                        <li><a class="hamburger-menu__saved-films" href='https://github.com'>Сохранённые фильмы</a></li>
+                    <ul className="hamburger-menu__box">
+                        <li><Link to='/' className="hamburger-menu__item" >Главная</Link></li>
+                        <li><Link to='/movies' className="hamburger-menu__films">Фильмы</Link></li>
+                        <li><Link to='/saved-movies' className="hamburger-menu__saved-films">Сохранённые фильмы</Link></li>
                         <div className="hamburger-menu__account-container">
-                            <li><a class="hamburger-menu__account" href='https://github.com'>Аккаунт</a></li>
+                            <li><Link to='/profile' className="hamburger-menu__account">Аккаунт</Link></li>
                             <img className="hamburger-menu__account-icon" src={account} alt='Иконка аккаунта' />
                         </div>
                     </ul>
                 </div>
-            </div>
+            </div >
         </header >
 
     );

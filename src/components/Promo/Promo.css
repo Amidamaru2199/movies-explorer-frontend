@@ -29,9 +29,14 @@
     line-height: 16px;
     color: #FFFFFF;
     background-color: transparent;
-    width: 129px;
-    height: 36px;
+    width: 107px;
+    height: 25px;
+    padding-top: 9px;
+    padding-left: 20px;
     margin: 146px 0 75px;
+    display: block;
+    text-decoration: none;
+
 }
 
 .promo__subtitle {
@@ -90,10 +95,15 @@
 
     .promo__subtitle {
         margin: 22px auto 0;
+        max-width: 260px;
     }
 
     .promo__learn-button {
-        margin-top: 92px;
+        margin: 92px auto 75px;
+        width: 126px;
+        height: 25px;
+        padding-top: 9px;
+        padding-left: 0;
     }
 }
 

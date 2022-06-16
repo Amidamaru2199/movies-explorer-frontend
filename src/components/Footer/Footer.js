@@ -11,9 +11,9 @@ function Footer() {
                 <nav className='footer__nav'>
                     <p className='footer__copyrate'>&copy; {new Date().getFullYear()}</p>
                     <div className='footer__links'>
-                        <a href='https://fsg.com' className='footer__link'>Яндекс.Практикум</a>
-                        <a href='https://fsg.com' className='footer__link'>Github</a>
-                        <a href='https://fsg.com' className='footer__link'>Facebook</a>
+                        <a href='https://practicum.yandex.ru' className='footer__link'>Яндекс.Практикум</a>
+                        <a href='https://github.com' className='footer__link'>Github</a>
+                        <a href='https://ru-ru.facebook.com/' className='footer__link'>Facebook</a>
                     </div>
                 </nav>
             </div>

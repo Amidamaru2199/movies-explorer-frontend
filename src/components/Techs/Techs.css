@@ -1,3 +1,9 @@
+@font-face {
+    font-family: 'Inter';
+    src: url(../../vendor/fonts/Inter-Regular.woff);
+    src: url(../../vendor/fonts/Inter-Regular.woff2);
+}
+
 .techs {
     background-color: #272727;
 }
@@ -8,7 +14,7 @@
 }
 
 .techs__title {
-    font-family: 'Inter';
+    font-family: 'Inter', Arial, sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: 50px;
@@ -20,7 +26,7 @@
 }
 
 .techs__subtitle {
-    font-family: 'Inter';
+    font-family: 'Inter', Arial, sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: 14px;
@@ -48,7 +54,7 @@
     list-style-type: none;
     display: flex;
     justify-content: center;
-    font-family: 'Inter';
+    font-family: 'Inter', Arial, sans-serif;
     align-items: center;
     font-style: normal;
     font-weight: 400;

@@ -1,3 +1,9 @@
+@font-face {
+    font-family: 'Inter';
+    src: url(../../vendor/fonts/Inter-Regular.woff);
+    src: url(../../vendor/fonts/Inter-Regular.woff2);
+}
+
 .not-found {
     background-color: #202020;
     height: 100vh
@@ -13,7 +19,7 @@
 }
 
 .not-found__code {
-    font-family: 'Inter';
+    font-family: 'Inter', Arial, sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: 140px;
@@ -24,7 +30,7 @@
 }
 
 .not-found__text {
-    font-family: 'Inter';
+    font-family: 'Inter', Arial, sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: 16px;
@@ -35,7 +41,7 @@
 }
 
 .not-found__link {
-    font-family: 'Inter';
+    font-family: 'Inter', Arial, sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: 14px;
@@ -44,4 +50,21 @@
     text-align: center;
     color: #4285F4;
     margin: 184px 0 0;
+}
+
+@media screen and (max-width: 486px) {
+    .not-found__code {
+        font-size: 80px;
+        line-height: 97px;
+    }
+
+    .not-found__text {
+        font-size: 12px;
+        line-height: 15px;
+    }
+
+    .not-found__link {
+        font-size: 12px;
+        line-height: 15px;
+    }
 }
