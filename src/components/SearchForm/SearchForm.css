@@ -21,6 +21,8 @@
     position: relative;
 }
 
+.search-form__form {}
+
 .search-form__input {
     background-color: transparent;
     border: 0;

@@ -99,6 +99,12 @@
     }
 }
 
+@media screen and (max-width: 768px) {
+    .short-film {
+        height: auto;
+    }
+}
+
 @media screen and (max-width: 486px) {
     .short-film__cards {
         padding-top: 91px;

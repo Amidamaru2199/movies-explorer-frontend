@@ -7,9 +7,10 @@ function SearchForm() {
 
         <div className='search-form'>
             <div className='search-form__container'>
-
-                <input className='search-form__input' placeholder='Фильм' />
-                <button className='search-form__button' type='button' />
+                <form className='search-form__form'>
+                    <input required type='text' className='search-form__input' placeholder='Фильм' />
+                    <button className='search-form__button' type='submit' />
+                </form>
                 <div className='search-form__positioning-container'>
                     <label class="search-form__switch">
                         <input type='checkbox' />

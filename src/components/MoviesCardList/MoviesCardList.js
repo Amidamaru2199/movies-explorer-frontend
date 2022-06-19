@@ -105,14 +105,14 @@ function MoviesCardList() {
                         <img className='card__image' src={promo} alt='Промо фильма' />
                         <p className='card__text'>33 слова о дизайне</p>
                         <p className='card__duration'>1ч42м</p>
-                        <button className='card__like-button' />
+                        <button className='card__like-button card__like-button_active' />
                     </div>
 
                     <div className='card movies-card-list__card'>
                         <img className='card__image' src={promo} alt='Промо фильма' />
                         <p className='card__text'>33 слова о дизайне</p>
                         <p className='card__duration'>1ч42м</p>
-                        <button className='card__like-button' />
+                        <button className='card__like-button card__like-button_active' />
                     </div>
 
                     <div className='card movies-card-list__card'>

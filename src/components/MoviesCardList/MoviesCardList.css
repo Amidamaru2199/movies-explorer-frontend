@@ -47,6 +47,20 @@
     bottom: 45px;
 }
 
+.card__like-button_active {
+    background-image: url('../../images/likeActive.svg');
+    width: 24px;
+    height: 24px;
+    border: 0px;
+    border-radius: 50%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: #313131;
+    position: absolute;
+    right: 0;
+    bottom: 45px;
+}
+
 .card__image {
     width: 270px;
     height: 151px;

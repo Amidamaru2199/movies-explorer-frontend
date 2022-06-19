@@ -30,14 +30,6 @@ import {
 function App() {
   return (
     <div className="App">
-      {/* <Login /> */}
-      {/* <Register /> */}
-      {/* <NotFound /> */}
-      {/* <FilmsHeader /> */}
-      {/* <ShortFilm /> */}
-      {/* <Profile /> */}
-      {/* <SearchForm />
-      <MoviesCardList /> */}
       <Switch>
 
 
@@ -57,6 +49,7 @@ function App() {
         </Route>
 
         <Route path='/profile'>
+          <FilmsHeader />
           <Profile />
         </Route>
 

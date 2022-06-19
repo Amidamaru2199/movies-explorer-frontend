@@ -38,6 +38,11 @@
     margin: 40px 0 20px;
 }
 
+.login__form {
+    display: flex;
+    flex-direction: column;
+}
+
 .login__input-name {
     font-family: 'Inter', Arial, sans-serif;
     font-style: normal;

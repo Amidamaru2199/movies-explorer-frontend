@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import '../../vendor/normalize.css';
 import './Profile.css';
 
@@ -16,8 +17,8 @@ function Profile() {
                     <p className='profile__p'>E-mail</p>
                     <p className='profile__p'>hoztovari99@yandex.ru</p>
                 </div>
-                <a className='profile__edit-button'>Редактировать</a>
-                <a className='profile__exit-button'>Выйти из аккаунта</a>
+                <button type='button' className='profile__edit-button'>Редактировать</button>
+                <Link className='profile__exit-button'>Выйти из аккаунта</Link>
             </div>
         </section>
 
