@@ -10,7 +10,7 @@ function FilmsHeader() {
 
         <header className="films-header">
             <div className="films-header__container">
-                <img className="films-header__logo" src={logo} alt="Лого" />
+                <Link to='/'><img className="films-header__logo" src={logo} alt="Лого" /></Link>
                 <div className="films-header__elements">
                     <Link to='/movies' className="films-header__films">Фильмы</Link>
                     <Link to='/saved-movies' className="films-header__saved-films">Сохранённые фильмы</Link>

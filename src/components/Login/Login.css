@@ -81,6 +81,21 @@
     margin-top: 180px;
 }
 
+.login__button-in {
+    background: #757679;
+    border: none;
+    border-radius: 3px;
+    height: 45px;
+    font-family: 'Inter', Arial, sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    text-align: center;
+    color: #FFFFFF;
+    margin-top: 180px;
+}
+
 .login__signup {
     display: flex;
     justify-content: center;

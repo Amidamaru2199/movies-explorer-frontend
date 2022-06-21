@@ -4,7 +4,7 @@ import logo from '../../images/logo.svg'
 import { Link, Route } from "react-router-dom";
 
 
-function Header() {
+function Header({ loggedIn }) {
     return (
 
         <header className="header">
@@ -13,6 +13,7 @@ function Header() {
                 <div className="header__elements">
                     <Link to="/sign-up" className="header__signup-button">Регистрация</Link>
                     <Link to="/sign-in" className="header__signin-button">Войти</Link>
+                    <Link to="/profile" className={loggedIn ? "header__profile-button" : "header__profile-button-in"}>Аккаунт</Link>
                 </div>
             </div>
         </header>

@@ -28,6 +28,15 @@
     margin-top: 70px;
 }
 
+.register__error-text {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 10px;
+    line-height: 12px;
+    color: #EE3465;
+}
+
 .register__title {
     font-family: 'Inter', Arial, sans-serif;
     font-style: normal;
@@ -68,6 +77,21 @@
 
 .register__button {
     background: #4285F4;
+    border: none;
+    border-radius: 3px;
+    height: 45px;
+    font-family: 'Inter', Arial, sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    text-align: center;
+    color: #FFFFFF;
+    margin-top: 97px;
+}
+
+.register__button-in {
+    background: #757679;
     border: none;
     border-radius: 3px;
     height: 45px;

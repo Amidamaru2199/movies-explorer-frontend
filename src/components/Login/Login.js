@@ -1,75 +1,64 @@
-/* eslint-disable default-case */
 import React, { useContext, useEffect, useState } from 'react';
 import '../../vendor/normalize.css';
 import './Login.css';
 import logo from '../../images/logo.svg';
 import { Link } from 'react-router-dom';
 
-function Login() {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [emailDirty, setEmailDirty] = useState(false);
-    const [passwordDirty, setPasswordDirty] = useState(false);
-    const [emailError, setEmailError] = useState('Емеил не может быть пустым');
-    const [passwordError, setPasswordError] = useState('Пароль не может быть пустым');
-    const [formValid, setFormValid] = useState(false);
+function Login({ handleLogin }) {
+    const [emailValue, setEmailValue] = useState('');
+    const [passwordValue, setPasswordValue] = useState('');
 
-    useEffect(() => {
-        if (emailError || passwordError) {
-            setFormValid(false)
+    const [isEmailValid, setEmailValidity] = useState(false);
+    const [isPasswordValid, setPasswordValidity] = useState(false);
+
+    const [errorEmail, setErrorEmail] = useState('');
+    const [errorPassword, setErrorPassword] = useState('');
+
+    function handleChangePassword(evt) {
+        const input = evt.target;
+        setPasswordValue(input.value);
+        setPasswordValidity(input.validity.valid);
+        if (!isPasswordValid) {
+            setErrorPassword(input.validationMessage);
         } else {
-            setFormValid(true)
+            setErrorPassword('');
         }
-    }, [emailError, passwordError])
+    };
 
-    const emailHandler = (e) => {
-        setEmail(e.target.value)
-        const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        if (!re.test(String(e.targrt.value).toLowerCase())) {
-            setEmailError('Некорректный емейл')
+    function handleChangeEmail(evt) {
+        const input = evt.target;
+        setEmailValue(input.value);
+        setEmailValidity(input.validity.valid);
+        if (!isEmailValid) {
+            setErrorEmail(input.validationMessage);
         } else {
-            setEmailError('')
+            setErrorEmail('');
         }
-    }
+    };
 
-    const passwordHandler = (e) => {
-        setPassword(e.target.value)
-        if (e.targrt.value.length < 3 || e.targrt.value.length > 8) {
-            setPasswordError('Емейл должен быть длинее 3 и не короче 8')
-            if (!e.target.value) {
-                setPasswordError('Пароль не может быть пустым')
-            }
-        } else {
-            setPasswordError('')
-        }
-    }
+    function handleSubmit(evt) {
+        evt.preventDefault();
 
-    const blurHandler = (e) => {
-        switch (e.target.name) {
-            case 'email': setEmailDirty(true)
-                break
-            case 'password': setPasswordDirty(true)
-                break
-        }
+        handleLogin(passwordValue, emailValue)
     }
 
     return (
 
         <section className="login">
             <div className='login__container'>
-                <form className='login__form'>
-                    <img className="login__logo" src={logo} alt="Лого" />
-                    <h1 className='login__title'>Рады видеть!</h1>
+                <Link to='/'><img className="login__logo" src={logo} alt="Лого" /></Link>
+                <h1 className='login__title'>Рады видеть!</h1>
+                <form onSubmit={handleSubmit} className='login__form'>
 
                     <p className='login__input-name'>E-mail</p>
-                    <input onChange={e => emailHandler(e)} value={email} onBlur={e => blurHandler(e)} name='email' type='text' className='login__email-input login__input input' />
-                    {(emailDirty && emailError) && <div style={{ color: 'red' }}>{emailError}</div>}
+                    <input id="email-input-id" onChange={handleChangeEmail} value={emailValue} name='email' type='email' className='login__email-input login__input input' autoComplete="off" required />
+                    <span className='register__error-text'>{errorEmail}</span>
 
                     <p className='login__input-name'>Пароль</p>
-                    <input onChange={e => passwordHandler(e)} value={password} onBlur={e => blurHandler(e)} name='password' type='password' className='login__password-input login__input input' />
-                    {(passwordDirty && passwordError) && <span>{passwordError}</span>}
+                    <input id="password-input-id" onChange={handleChangePassword} minLength={4} maxLength={20} value={passwordValue} name='password' type='password' className='login__password-input login__input input' required />
+                    <span className='register__error-text'>{errorPassword}</span>
 
-                    <button disabled={!formValid} type='submit' className='login__button'>Войти</button>
+                    <button disabled={!(isEmailValid && isPasswordValid)} className={(isEmailValid && isPasswordValid) ? 'login__button' : 'login__button-in'} type='submit' /*className='login__button'*/>Войти</button>
                 </form>
                 <div className="login__signup">
                     <p className="login__signup-text">Ещё не зарегистрированы?</p>

@@ -57,12 +57,33 @@
     text-decoration: none;
 }
 
+.header__profile-button {
+    color: #FFFFFF;
+    border: none;
+    margin: 0 24px 0 0;
+    font-family: 'Inter', Arial, sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 16px;
+    text-decoration: none;
+    margin-right: 70px;
+}
+
+.header__profile-button-in {
+    display: none;
+}
+
 @media screen and (max-width: 910px) {
     .header__logo {
         margin-left: 30px;
     }
 
     .header__signin-button {
+        margin-right: 30px;
+    }
+
+    .header__profile-button {
         margin-right: 30px;
     }
 }
@@ -77,12 +98,16 @@
         width: 54px;
         height: 26px;
         font-size: 10px;
-        line-height: 16px;
+        line-height: 24px;
     }
 
     .header__signup-button {
         font-size: 10px;
         line-height: 16px;
+        margin-right: 8px;
+    }
+
+    .header__profile-button {
         margin-right: 8px;
     }
 }
