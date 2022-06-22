@@ -1,0 +1,117 @@
+@font-face {
+    font-family: 'Inter';
+    src: url(../../vendor/fonts/Inter-Regular.woff);
+    src: url(../../vendor/fonts/Inter-Regular.woff2);
+}
+
+.footer {
+    background-color: #202020;
+}
+
+.footer__container {
+    max-width: 1280px;
+    margin: 0 auto;
+}
+
+.footer__title {
+    font-family: 'Inter', Arial, sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 16px;
+    text-align: center;
+    color: #8B8B8B;
+    margin: 0;
+    padding-top: 61px;
+}
+
+.footer__nav {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px 70px 0;
+    border-top: 1px solid #424242;
+    padding-bottom: 20px;
+}
+
+.footer__copyrate {
+    font-family: 'Inter', Arial, sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 16px;
+    color: #FFFFFF;
+    margin: 20px 0 0;
+}
+
+.footer__links {
+    margin-top: 20px
+}
+
+.footer__link {
+    font-family: 'Inter', Arial, sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 16px;
+    text-align: right;
+    color: #FFFFFF;
+    text-decoration: none;
+    margin: 0 20px 0 0;
+}
+
+.footer__link:last-of-type {
+    margin-right: 0px;
+}
+
+@media screen and (max-width: 910px) {
+
+    .footer__nav {
+        margin: 20px 30px 0;
+        padding-bottom: 14px;
+    }
+
+    .footer__title {
+        font-size: 13px;
+        line-height: 16px;
+    }
+}
+
+@media screen and (max-width: 486px) {
+    .footer__container {
+        margin: 0 10px;
+    }
+
+    .footer__title {
+        font-size: 12px;
+        line-height: 15px;
+        padding-top: 39px;
+    }
+
+    .footer__nav {
+        margin: 20px 14px 0;
+        padding-bottom: 7px;
+        flex-direction: column-reverse;
+    }
+
+    .footer__links {
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .footer__link {
+        margin: 12px 0 0;
+        text-align: center;
+    }
+
+    .footer__copyrate {
+        margin: 30px auto 0;
+        font-size: 12px;
+        line-height: 15px;
+    }
+
+    .footer__link {
+        font-size: 12px;
+        line-height: 15px;
+    }
+}

@@ -1,0 +1,114 @@
+@font-face {
+    font-family: 'Inter';
+    src: url(../../vendor/fonts/Inter-Medium.woff);
+    src: url(../../vendor/fonts/Inter-Medium.woff2);
+}
+
+@font-face {
+    font-family: 'Inter';
+    src: url(../../vendor/fonts/Inter-Regular.woff);
+    src: url(../../vendor/fonts/Inter-Regular.woff2);
+}
+
+.portfolio {
+    background-color: #202020;
+}
+
+.portfolio__container {
+    max-width: 1280px;
+    margin: 0 auto;
+}
+
+.portfolio__title {
+    font-family: 'Inter', Arial, sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 20px;
+    color: #8B8B8B;
+    mix-blend-mode: normal;
+    margin: 0 0 0 70px;
+    padding: 100px 0 0;
+}
+
+.portfolio__link-container {
+    border-bottom: 1px solid #424242;
+    margin: 20px 70px 0;
+    display: flex;
+    justify-content: space-between;
+}
+
+.portfolio__link-container:first-of-type {
+    margin-top: 50px;
+}
+
+.portfolio__link-container:last-of-type {
+    padding: 0 0 125px;
+    border: none;
+}
+
+.portfolio__link-img {
+    margin-bottom: 17px;
+    margin-right: 6px;
+}
+
+.portfolio__link {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 30px;
+    line-height: 50px;
+    letter-spacing: -0.04em;
+    color: #FFFFFF;
+    margin: 0 0 19px;
+    text-decoration: none;
+}
+
+@media screen and (max-width: 910px) {
+    .portfolio__title {
+        margin-left: 50px;
+        padding: 90px 0 0;
+    }
+
+    .portfolio__link-container {
+        margin: 20px 50px 0;
+    }
+
+    .portfolio__link {
+        font-size: 28px;
+        line-height: 50px;
+    }
+
+    .portfolio__link-container:last-of-type {
+        padding: 0 0 90px;
+    }
+}
+
+@media screen and (max-width: 486px) {
+    .portfolio__title {
+        margin-left: 14px;
+        padding: 70px 0 0;
+        font-size: 14px;
+        line-height: 20px;
+    }
+
+    .portfolio__link-container {
+        margin: 20px 14px 0;
+    }
+
+    .portfolio__link {
+        font-size: 18px;
+        line-height: 28px;
+    }
+
+    .portfolio__link-img {
+        margin-right: 4px;
+        margin-bottom: 0;
+        margin-top: 7px;
+        height: 10px;
+    }
+
+    .portfolio__link-container:first-of-type {
+        margin-top: 41px;
+    }
+}
