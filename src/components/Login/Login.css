@@ -12,7 +12,7 @@
 
 .login {
     background-color: #202020;
-    height: 100vh
+    min-height: 100vh
 }
 
 .login__container {
