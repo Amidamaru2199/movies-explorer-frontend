@@ -98,10 +98,8 @@ function App() {
         if (res.token) {
           localStorage.setItem('jwt', res.token);
           getUserInfo(res.token)
+          history.push('/movies');
         }
-      })
-      .then(() => {
-        history.push('/movies');
       })
       .catch((err) => { console.log(err) })
   };
