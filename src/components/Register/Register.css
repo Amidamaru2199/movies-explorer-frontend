@@ -90,6 +90,10 @@
     margin-top: 97px;
 }
 
+.register__button:hover {
+    box-shadow: 0px 0px 5px 5px;
+}
+
 .register__button-in {
     background: #757679;
     border: none;

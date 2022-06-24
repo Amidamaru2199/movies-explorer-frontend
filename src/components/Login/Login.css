@@ -149,6 +149,12 @@
         line-height: 15px;
     }
 
+    .login__button-in {
+        margin: 271px 30px 0;
+        font-size: 12px;
+        line-height: 15px;
+    }
+
     .login__signup-text {
         font-size: 12px;
         line-height: 15px;
@@ -157,5 +163,9 @@
     .login__register-link {
         font-size: 12px;
         line-height: 15px;
+    }
+
+    .login__logo-link {
+        margin: auto;
     }
 }

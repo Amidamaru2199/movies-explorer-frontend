@@ -46,7 +46,7 @@ function Login({ handleLogin }) {
 
         <section className="login">
             <div className='login__container'>
-                <Link to='/'><img className="login__logo" src={logo} alt="Лого" /></Link>
+                <Link className='login__logo-link' to='/'><img className="login__logo" src={logo} alt="Лого" /></Link>
                 <h1 className='login__title'>Рады видеть!</h1>
                 <form onSubmit={handleSubmit} className='login__form'>
 

@@ -16,51 +16,55 @@ import Login from "../Login/Login";
 import NotFound from "../NotFound/NotFound";
 import Preloader from "../Preloader/Preloader"
 import Profile from '../Profile/Profile';
-import ShortFilm from '../ShortFilm/ShortFilm';
+import SavedFilm from '../SavedFilm/SavedFilm';
 import React, { useEffect, useState } from 'react';
+import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link,
-  useRouteMatch,
-  useParams,
   useHistory
 } from "react-router-dom";
-import { register, authorization, getEmail, getName } from '../../utils/MainApi';
+import { register, authorization, getUserInfo, editProfile } from '../../utils/MainApi';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
+import PopapProfile from '../PopapProfile/PopapProfile';
+import InfoTooltip from '../InfoTooltip/InfoTooltip';
 
 function App() {
 
-  const [userEmail, setUserEmail] = useState('');
-  const [userName, setUserName] = useState('');
+  const [currentUser, setCurrentUser] = useState({});
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [isInfoTooltipPopupOpen, setIsInfoTooltipPopupOpen] = useState(false);
+  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
+  const [moviesSearchValue, setMoviesSearchValue] = useState('');
   const [loggedIn, setLoggedIn] = useState(Boolean(localStorage.getItem('jwt')));//наш стейт
   const history = useHistory();
 
-  useEffect(() => {//наш юс еффект
+
+  const handleChangeMoviesSearch = (value) => {
+    setMoviesSearchValue(value);
+    //console.log(value)
+  };
+
+  useEffect(() => {
     tokenCheck();
   }, []);
 
-  function tokenCheck() {//тоже что-то наше
+  function tokenCheck() {
     if (!localStorage.getItem('jwt')) return;
 
     const jwt = localStorage.getItem('jwt');
 
-    //setIsSuccess(true);
+    setIsSuccess(true);
 
-    getEmail(jwt).then((res) => {
+    getUserInfo(jwt).then((res) => {
       if (!res) return;
-
-      setUserEmail(res.email)
+      console.log(res)
+      setCurrentUser(res);
 
       setLoggedIn(true);
 
       //history.push('/')
-    })
-    getName(jwt).then((res) => {
-      if (!res) return;
-
-      setUserName(res.name)
     })
       .catch((err) => { console.log(err) })
   };
@@ -68,8 +72,15 @@ function App() {
   const handleRegister = (password, email, name) => {
     register(password, email, name)
       .then((res) => {
+        if (res.error) {
+          setIsInfoTooltipPopupOpen(true)
+          setIsSuccess(false)
+          return;
+        }
 
         if (res) {
+          setIsInfoTooltipPopupOpen(true)
+          setIsSuccess(true)
           history.push('/sign-in')
         }
       }).catch((err) => { console.log(err) })
@@ -79,17 +90,18 @@ function App() {
     authorization(password, email)
       .then((res) => {
         console.log(res)
-        /*if (res.message) {
+        if (res.message) {
           setIsInfoTooltipPopupOpen(true)
           setIsSuccess(false)
           return;
-        }*/
+        }
         if (res.token) {
           localStorage.setItem('jwt', res.token);
-          setLoggedIn(true);
-          history.push('/movies')
-          /*setUserEmail(email)*/
+          getUserInfo(res.token)
         }
+      })
+      .then(() => {
+        history.push('/movies');
       })
       .catch((err) => { console.log(err) })
   };
@@ -97,57 +109,93 @@ function App() {
   function handleLogOut() {
     localStorage.removeItem('jwt');
     setLoggedIn(false);
-    //setUserEmail('');
+    setCurrentUser({});
     history.push('/');
     console.log('Время выхода:', new Date().toLocaleTimeString());
   }
 
+  function handleEditProfileClick() {
+    setIsEditProfilePopupOpen(true);
+  };
+
+  function closeAllPopups() {
+    setIsEditProfilePopupOpen(false);
+    setIsInfoTooltipPopupOpen(false);
+  };
+
+  function handleUpdateUser(profileData) {
+    editProfile(profileData, localStorage.getItem('jwt'))
+      .then(profileData => {
+        setCurrentUser(profileData)
+        closeAllPopups()
+      })
+      .catch((err) => console.log(err))
+  };
+
   return (
     <div className="App">
-      <Switch>
+      <CurrentUserContext.Provider value={currentUser}>
+        <Switch>
 
-        <Route path='/sign-up'>
-          <Register handleRegister={handleRegister} />
-        </Route>
+          <Route path='/sign-up'>
+            <Register handleRegister={handleRegister} />
+          </Route>
 
-        <Route path='/sign-in'>
-          <Login handleLogin={handleLogin} />
-        </Route>
+          <Route path='/sign-in'>
+            <Login handleLogin={handleLogin} />
+          </Route>
 
-        <ProtectedRoute path='/movies' loggedIn={loggedIn}>
-          <FilmsHeader />
-          <SearchForm />
-          <MoviesCardList />
-          <Footer />
-        </ProtectedRoute>
-
-
-        <ProtectedRoute path='/saved-movies' loggedIn={loggedIn}>
-          <FilmsHeader />
-          <SearchForm />
-          <ShortFilm />
-          <Footer />
-        </ProtectedRoute>
-
-        <ProtectedRoute path='/profile' loggedIn={loggedIn}>
-          <FilmsHeader />
-          <Profile handleLogOut={handleLogOut} userEmail={userEmail} userName={userName} />
-        </ProtectedRoute>
-
-        <Route path="/" >
-          <Header loggedIn={loggedIn} />
-          <Promo />
-          <NavTab />
-          <Techs />
-          <AboutMe />
-          <Portfolio />
-          <Footer />
-        </Route>
+          <ProtectedRoute path='/movies' loggedIn={loggedIn}>
+            <div className='app__container'>
+              <FilmsHeader />
+              <SearchForm handleChangeMoviesSearch={handleChangeMoviesSearch} />
+              <MoviesCardList moviesSearchValue={moviesSearchValue} />
+              <Footer />
+            </div>
+          </ProtectedRoute>
 
 
-      </Switch>
+          <ProtectedRoute path='/saved-movies' loggedIn={loggedIn}>
+            <div className='app__container'>
+              <FilmsHeader />
+              <SearchForm />
+              <SavedFilm />
+              <Footer />
+            </div>
+          </ProtectedRoute>
 
-    </div>
+          <ProtectedRoute path='/profile' loggedIn={loggedIn}>
+            <FilmsHeader />
+            <Profile
+              handleLogOut={handleLogOut}
+              handleEditProfileClick={handleEditProfileClick}
+            />
+          </ProtectedRoute>
+
+          <Route path="/" >
+            <Header loggedIn={loggedIn} />
+            <Promo />
+            <NavTab />
+            <Techs />
+            <AboutMe />
+            <Portfolio />
+            <Footer />
+          </Route>
+
+          <Route path="*">
+            <NotFound />
+          </Route>
+
+        </Switch>
+        <PopapProfile
+          isOpened={isEditProfilePopupOpen}
+          onClose={closeAllPopups}
+          handleUpdateUser={handleUpdateUser}
+        />
+
+        <InfoTooltip isOpened={isInfoTooltipPopupOpen} onClose={closeAllPopups} isSuccess={isSuccess} />
+      </CurrentUserContext.Provider>
+    </div >
   );
 }
 

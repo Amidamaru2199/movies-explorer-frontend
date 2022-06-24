@@ -13,7 +13,7 @@ function AboutMe() {
                     <div className='about-me__student-info1'>
                         <h3 className='about-me__student-name'>Виталий</h3>
                         <h4 className='about-me__student-profession'>Фронтенд-разработчик, 30 лет</h4>
-                        <p className='about-me__student-text'>Я&nbsp;родился и&nbsp;живу в&nbsp;Саратове, закончил факультет экономики СГУ. У&nbsp;меня есть жена
+                        <p className='about-me__student-text'>Я&nbsp;туалл и&nbsp;живу в&nbsp;Саратове, закончил факультет экономики СГУ. У&nbsp;меня есть жена
                             и&nbsp;дочь. Я&nbsp;люблю слушать музыку, а&nbsp;ещё увлекаюсь бегом. Недавно начал кодить. С&nbsp;2015 года работал в&nbsp;компании &laquo;СКБ Контур&raquo;. После того, как прошёл курс по&nbsp;веб-разработке, начал заниматься фриланс-заказами и&nbsp;ушёл с&nbsp;постоянной работы.</p>
                         <div className='about-me__student-links'>
                             <a target="blank" href='https://www.facebook.com/' className='about-me__student-link'>Facebook</a>
