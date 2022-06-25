@@ -55,6 +55,11 @@
     background-position: center;
 }
 
+.search-form__button:hover {
+    cursor: pointer;
+    background-color: #005cf5;
+}
+
 .search-form__button_invalid {
     opacity: .4;
     position: absolute;

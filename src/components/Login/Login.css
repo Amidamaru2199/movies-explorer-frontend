@@ -81,6 +81,11 @@
     margin-top: 180px;
 }
 
+.login__button:hover {
+    cursor: pointer;
+    background-color: #005cf5;
+}
+
 .login__button-in {
     background: #757679;
     border: none;
@@ -167,5 +172,10 @@
 
     .login__logo-link {
         margin: auto;
+    }
+
+    .login__error-text {
+        margin-left: 30px;
+        margin-right: 30px;
     }
 }

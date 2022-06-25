@@ -12,7 +12,7 @@ function Profile({ handleLogOut, handleEditProfileClick }) {
 
         <section className="profile">
             <div className='profile__container'>
-                <h1 className='profile__title'>Привет, Виталий!</h1>
+                <h1 className='profile__title'>Привет, {currentUser.name}!</h1>
                 <div className='profile__div'>
                     <p className='profile__p'>Имя</p>
                     <p className='profile__p'>{currentUser.name}</p>

@@ -4,7 +4,7 @@ import './MoviesCardList.css';
 import { getMovies } from '../../utils/MoviesApi';
 import MovieCard from '../MovieCard/MovieCard';
 
-function MoviesCardList({ moviesSearchValue }) {
+function MoviesCardList({ isShortFilm, moviesSearchValue }) {
 
     //console.log('фильмлист', moviesSearchValue)
 
@@ -32,31 +32,43 @@ function MoviesCardList({ moviesSearchValue }) {
     useEffect(() => {
         getMovies()
             .then((movies) => {
-                setMoviesList(movies);
+                setMoviesList(movies)
+                if (moviesSearchValue !== '') {
+                    filter();
+                }
                 //console.log(movies);
             })
+
     }, []);
 
     useEffect(() => {
         filter()
         //console.log('filteredMoviesList', filteredMoviesList)
-    }, [moviesSearchValue]);
+    }, [moviesSearchValue, isShortFilm]);
 
     const filter = () => {
-
         const keyword = moviesSearchValue.toLowerCase();
+        if (keyword === '') {
+            setFilteredMoviesList([])
+            return
+        }
+        let results = moviesList;
 
-        //console.log('keyword', keyword)
+
+        console.log('keyword', keyword)
 
         if (keyword !== '') {
-            const results = moviesList.filter((movies) => {
+            results = results.filter((movies) => {
                 return movies.nameRU.toLowerCase().includes(keyword);
             });
             //console.log('resultsr', results)
-            setFilteredMoviesList(results);
-        } else {
-            setFilteredMoviesList(moviesList);
+            if (isShortFilm) {
+                results = results.filter((movies) => {
+                    return movies.duration < 40;
+                })
+            }
         }
+        setFilteredMoviesList(results);
     };
 
     return (

@@ -63,24 +63,24 @@ const useInput = (initialValue, validations) => {
 
 
 
-function SearchForm({ handleChangeMoviesSearch }) {
+function SearchForm({ handleChangeisShortFilm, isShortFilm, moviesSearchValue, handleChangeMoviesSearch }) {
 
     const search = useInput('', { isEmpty: true });
 
-    const [value, setValue] = useState('');
+    // const [value, setValue] = useState(moviesSearchValue);
 
 
 
 
-    const onChange = (event) => {
-        setValue(event.target.value);
+    // const onChange = (event) => {
+    //     setValue(event.target.value);
 
-    };
+    // };
 
     const onSubmit = (event) => {
         event.preventDefault();
 
-        handleChangeMoviesSearch(value)
+        handleChangeMoviesSearch(search.value)
     }
 
     return (
@@ -89,20 +89,20 @@ function SearchForm({ handleChangeMoviesSearch }) {
             <div className='search-form__container'>
                 <form onSubmit={onSubmit} className='search-form__form'>
                     <input
-                        /*onBlur={search.onBlur}*/
+                        onBlur={search.onBlur}
                         name='film'
-                        onChange={/*search.onChange*/onChange}
+                        onChange={search.onChange}
                         autoComplete='off'
-                        value={/*search.value*/value}
+                        value={search.value}
                         type='text'
                         className='search-form__input'
                         placeholder='Фильм' />
                     {(search.isDirty && search.isEmpty) && <span className='search-form__error'>{'Нужно ввести ключевое слово'}</span>}
-                    <button /*disabled={!search.inputValid} className={(!search.inputValid) ? 'search-form__button_invalid' : 'search-form__button'}*/ className='search-form__button' type='submit' />
+                    <button disabled={!search.inputValid} className={(!search.inputValid) ? 'search-form__button_invalid' : 'search-form__button'} type='submit' />
                 </form>
                 <div className='search-form__positioning-container'>
                     <label class="search-form__switch">
-                        <input type='checkbox' />
+                        <input type='checkbox' onChange={handleChangeisShortFilm} />
                         <span class="search-form__slider" />
                     </label>
                     <p className='search-form__text'>Короткометражки</p>

@@ -2,9 +2,12 @@ import React, { useEffect, useState, useContext } from 'react';
 import '../../vendor/normalize.css';
 import './MovieCard.css';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
-import { savedMovies } from '../../utils/MainApi';
+import { savedMovies, deleteMovies } from '../../utils/MainApi';
 
+let cardID;
 function MovieCard({ /*nameRU, url, duration, trailerLink*/ card }) {
+
+    console.log(card)
 
     const currentUser = useContext(CurrentUserContext);
 
@@ -12,10 +15,22 @@ function MovieCard({ /*nameRU, url, duration, trailerLink*/ card }) {
 
     const nomo = `https://api.nomoreparties.co/${card.image.url}`;
 
+
+
     function cardLike() {
+
         const jwt = localStorage.getItem('jwt');
-        setIsLiked(true);
-        savedMovies(card, jwt);
+        if (isLiked) {
+            setIsLiked(false);
+            deleteMovies(cardID, jwt)
+        } else {
+            setIsLiked(true);
+            savedMovies(card, jwt)
+                .then((card) => {
+                    console.log(card)
+                    cardID = card._id
+                })
+        }
     }
 
     function getTimeFromMins(mins) {

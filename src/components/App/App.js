@@ -37,6 +37,7 @@ function App() {
   const [isInfoTooltipPopupOpen, setIsInfoTooltipPopupOpen] = useState(false);
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
   const [moviesSearchValue, setMoviesSearchValue] = useState('');
+  const [isShortFilm, setIsShortFilm] = useState(false);
   const [loggedIn, setLoggedIn] = useState(Boolean(localStorage.getItem('jwt')));//наш стейт
   const history = useHistory();
 
@@ -44,6 +45,11 @@ function App() {
   const handleChangeMoviesSearch = (value) => {
     setMoviesSearchValue(value);
     //console.log(value)
+  };
+
+  const handleChangeisShortFilm = (value) => {
+    setIsShortFilm(!isShortFilm);
+    console.log(isShortFilm)
   };
 
   useEffect(() => {
@@ -79,9 +85,15 @@ function App() {
         }
 
         if (res) {
+          authorization(password, email)
+            .then((res) => {
+              localStorage.setItem('jwt', res.token);
+              getUserInfo(res.token);
+              history.push('/movies')
+            })
           setIsInfoTooltipPopupOpen(true)
           setIsSuccess(true)
-          history.push('/sign-in')
+          history.push('/movies')
         }
       }).catch((err) => { console.log(err) })
   };
@@ -97,9 +109,10 @@ function App() {
         }
         if (res.token) {
           localStorage.setItem('jwt', res.token);
-          getUserInfo(res.token)
-          history.push('/movies');
+          getUserInfo(res.token);
+          history.push('/movies')
         }
+
       })
       .catch((err) => { console.log(err) })
   };
@@ -146,8 +159,8 @@ function App() {
           <ProtectedRoute path='/movies' loggedIn={loggedIn}>
             <div className='app__container'>
               <FilmsHeader />
-              <SearchForm handleChangeMoviesSearch={handleChangeMoviesSearch} />
-              <MoviesCardList moviesSearchValue={moviesSearchValue} />
+              <SearchForm handleChangeisShortFilm={handleChangeisShortFilm} isShortFilm={isShortFilm} moviesSearchValue={moviesSearchValue} handleChangeMoviesSearch={handleChangeMoviesSearch} />
+              <MoviesCardList isShortFilm={isShortFilm} moviesSearchValue={moviesSearchValue} />
               <Footer />
             </div>
           </ProtectedRoute>
@@ -180,9 +193,9 @@ function App() {
             <Footer />
           </Route>
 
-          <Route path="*">
+          {/* <Route path="*">
             <NotFound />
-          </Route>
+          </Route> */}
 
         </Switch>
         <PopapProfile

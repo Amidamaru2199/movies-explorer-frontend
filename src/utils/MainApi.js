@@ -76,7 +76,6 @@ export const editProfile = (profileData, JWT) => {
         .catch((err) => console.log(err))
 }
 
-
 export const savedMovies = (movie, JWT) => {
     return fetch(`${BASE_URL}/movies`, {
         method: 'POST',
