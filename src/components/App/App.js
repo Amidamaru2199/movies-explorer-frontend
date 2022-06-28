@@ -3,18 +3,17 @@ import "./App.css";
 import Header from "../Header/Header"
 import FilmsHeader from "../FilmsHeader/FilmsHeader";
 import Promo from "../Promo/Promo";
-import Main from "../Main/Main";
 import NavTab from "../NavTab/NavTab";
 import Techs from "../Techs/Techs";
 import AboutMe from "../AboutMe/AboutMe";
 import Portfolio from "../Portfolio/Portfolio";
 import Footer from "../Footer/Footer";
 import SearchForm from "../SearchForm/SearchForm";
+import SearchFormSaved from "../SearchFormSaved/SearchFormSaved";
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
 import Register from "../Register/Register";
 import Login from "../Login/Login";
 import NotFound from "../NotFound/NotFound";
-import Preloader from "../Preloader/Preloader"
 import Profile from '../Profile/Profile';
 import SavedFilm from '../SavedFilm/SavedFilm';
 import React, { useEffect, useState } from 'react';
@@ -26,18 +25,27 @@ import {
   useHistory
 } from "react-router-dom";
 import { register, authorization, getUserInfo, editProfile } from '../../utils/MainApi';
+import { getMovies } from '../../utils/MoviesApi';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import PopapProfile from '../PopapProfile/PopapProfile';
 import InfoTooltip from '../InfoTooltip/InfoTooltip';
+import InfoTooltipProfile from '../infoTooltipProfile/InfoTooltipProfile';
 
 function App() {
 
   const [currentUser, setCurrentUser] = useState({});
   const [isSuccess, setIsSuccess] = useState(false);
   const [isInfoTooltipPopupOpen, setIsInfoTooltipPopupOpen] = useState(false);
+  const [isInfoTooltipProfilePopupOpen, setIsInfoTooltipProfilePopupOpen] = useState(false);
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
+  const [moviesList, setMoviesList] = useState([]);
+
   const [moviesSearchValue, setMoviesSearchValue] = useState('');
   const [isShortFilm, setIsShortFilm] = useState(false);
+
+  const [savedMoviesSearchValue, setSavedMoviesSearchValue] = useState('');
+  const [isSavedShortFilm, setIsSavedShortFilm] = useState(false);
+
   const [loggedIn, setLoggedIn] = useState(Boolean(localStorage.getItem('jwt')));//наш стейт
   const history = useHistory();
 
@@ -52,9 +60,27 @@ function App() {
     console.log(isShortFilm)
   };
 
+  const handleChangeSavedMoviesSearch = (value) => {
+    setSavedMoviesSearchValue(value);
+    //console.log(value)
+  };
+
+  const handleChangeisSavedShortFilm = (value) => {
+    setIsSavedShortFilm(!isSavedShortFilm);
+    console.log(isSavedShortFilm)
+  };
+
   useEffect(() => {
     tokenCheck();
   }, []);
+
+  useEffect(() => {
+    if (!loggedIn) return;
+    getMovies()
+      .then((movies) => {
+        setMoviesList(movies)
+      })
+  }, [loggedIn]);
 
   function tokenCheck() {
     if (!localStorage.getItem('jwt')) return;
@@ -132,13 +158,23 @@ function App() {
   function closeAllPopups() {
     setIsEditProfilePopupOpen(false);
     setIsInfoTooltipPopupOpen(false);
+    setIsInfoTooltipProfilePopupOpen(false)
   };
 
-  function handleUpdateUser(profileData) {
-    editProfile(profileData, localStorage.getItem('jwt'))
+  function handleUpdateUser(profile) {
+    editProfile(profile, localStorage.getItem('jwt'))
       .then(profileData => {
+        if (profileData.email === currentUser.email && profileData.name === currentUser.name) {
+          setIsInfoTooltipProfilePopupOpen(true)
+          setIsSuccess(false)
+          return;
+        }
+
         setCurrentUser(profileData)
+
         closeAllPopups()
+        setIsInfoTooltipProfilePopupOpen(true)
+        setIsSuccess(true)
       })
       .catch((err) => console.log(err))
   };
@@ -156,21 +192,20 @@ function App() {
             <Login handleLogin={handleLogin} />
           </Route>
 
-          <ProtectedRoute path='/movies' loggedIn={loggedIn}>
+          <ProtectedRoute path='/saved-movies' loggedIn={loggedIn}>
             <div className='app__container'>
               <FilmsHeader />
-              <SearchForm handleChangeisShortFilm={handleChangeisShortFilm} isShortFilm={isShortFilm} moviesSearchValue={moviesSearchValue} handleChangeMoviesSearch={handleChangeMoviesSearch} />
-              <MoviesCardList isShortFilm={isShortFilm} moviesSearchValue={moviesSearchValue} />
+              <SearchFormSaved handleChangeisSavedShortFilm={handleChangeisSavedShortFilm} isSavedShortFilm={isSavedShortFilm} savedMoviesSearchValue={savedMoviesSearchValue} handleChangeSavedMoviesSearch={handleChangeSavedMoviesSearch} />
+              <SavedFilm isSavedShortFilm={isSavedShortFilm} moviesSearchValue={moviesSearchValue} />
               <Footer />
             </div>
           </ProtectedRoute>
 
-
-          <ProtectedRoute path='/saved-movies' loggedIn={loggedIn}>
+          <ProtectedRoute path='/movies' loggedIn={loggedIn}>
             <div className='app__container'>
               <FilmsHeader />
-              <SearchForm />
-              <SavedFilm />
+              <SearchForm handleChangeisShortFilm={handleChangeisShortFilm} isShortFilm={isShortFilm} moviesSearchValue={moviesSearchValue} handleChangeMoviesSearch={handleChangeMoviesSearch} />
+              <MoviesCardList isShortFilm={isShortFilm} moviesList={moviesList} moviesSearchValue={moviesSearchValue} />
               <Footer />
             </div>
           </ProtectedRoute>
@@ -183,7 +218,7 @@ function App() {
             />
           </ProtectedRoute>
 
-          <Route path="/" >
+          <Route exact path="/" >
             <Header loggedIn={loggedIn} />
             <Promo />
             <NavTab />
@@ -193,9 +228,9 @@ function App() {
             <Footer />
           </Route>
 
-          {/* <Route path="*">
+          <Route path="*">
             <NotFound />
-          </Route> */}
+          </Route>
 
         </Switch>
         <PopapProfile
@@ -203,7 +238,7 @@ function App() {
           onClose={closeAllPopups}
           handleUpdateUser={handleUpdateUser}
         />
-
+        <InfoTooltipProfile isOpened={isInfoTooltipProfilePopupOpen} onClose={closeAllPopups} isSuccess={isSuccess} />
         <InfoTooltip isOpened={isInfoTooltipPopupOpen} onClose={closeAllPopups} isSuccess={isSuccess} />
       </CurrentUserContext.Provider>
     </div >

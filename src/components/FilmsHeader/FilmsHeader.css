@@ -44,6 +44,10 @@
     margin-right: 20px;
 }
 
+.films-header__films:active {
+    text-decoration: 1px solid white;
+}
+
 .films-header__saved-films {
     font-family: 'Inter', Arial, sans-serif;
     font-style: normal;

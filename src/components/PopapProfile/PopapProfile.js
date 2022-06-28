@@ -1,14 +1,84 @@
 import React, { useContext, useEffect, useState } from "react";
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import './PopapProfile.css'
-function PopupProfile({ isOpened, onClose, handleUpdateUser }) {
 
+const useValidation = (value, validations) => {
 
-    const currentUser = useContext(CurrentUserContext);
-    const [name, setName] = useState("");
-    const [email, setEmail] = useState("");
+    const [isEmpty, setEmpty] = useState(true);
+    const [minLengthErrror, setMinLengthError] = useState(false);
+    const [emailError, setEmailError] = useState(false);
+    const [inputValid, setInputValid] = useState(false);
 
     useEffect(() => {
+        for (const valiation in validations) {
+            switch (valiation) {
+                case 'minLength':
+
+                    value.length < validations[valiation] ? setMinLengthError(true) : setMinLengthError(false)
+
+                    break;
+                case 'isEmpty':
+                    value ? setEmpty(false) : setEmpty(true)
+                    break;
+
+                case 'isEmail':
+                    const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+                    re.test(String(value).toLowerCase()) ? setEmailError(false) : setEmailError(true);
+            }
+        }
+    }, [value])
+
+    useEffect(() => {
+        if (isEmpty || minLengthErrror || emailError) {
+            setInputValid(false)
+
+        } else {
+            setInputValid(true)
+        }
+    }, [isEmpty, minLengthErrror, emailError])
+
+    return {
+        isEmpty,
+        minLengthErrror,
+        emailError,
+        inputValid
+    }
+}
+
+const useInput = (initialValue, validations) => {
+    const [value, setValue] = useState(initialValue);
+    const [isDirty, setDirty] = useState(false);
+    const valid = useValidation(value, validations)
+
+    const onChange = (event) => {
+        setValue(event.target.value);
+    }
+
+    const onBlur = (event) => {
+        setDirty(true)
+    }
+
+    return {
+        value,
+        onChange,
+        onBlur,
+        isDirty,
+        ...valid
+    }
+};
+
+function PopupProfile({ isOpened, onClose, handleUpdateUser }) {
+    const currentUser = useContext(CurrentUserContext);
+
+    const email = useInput("", { isEmpty: true, minLength: 3, isEmail: true });
+    const name = useInput("", { isEmpty: true, minLength: 5 });
+
+
+
+    /*const [name, setName] = useState("");
+    const [email, setEmail] = useState("");*/
+
+    /*useEffect(() => {
         setName(currentUser.name);
         setEmail(currentUser.email);
     }, [currentUser, isOpened]);
@@ -19,14 +89,14 @@ function PopupProfile({ isOpened, onClose, handleUpdateUser }) {
 
     function handleChangeEmail(e) {
         setEmail(e.target.value);
-    };
+    };**/
 
     function handleSubmit(event) {
         event.preventDefault();
 
         handleUpdateUser({
-            name,
-            email,
+            name: name.value,
+            email: email.value,
         });
     }
 
@@ -44,8 +114,9 @@ function PopupProfile({ isOpened, onClose, handleUpdateUser }) {
                         id="name-input-id"
                         autoComplete="off"
                         required
-                        value={name}
-                        onChange={handleChangeName}
+                        value={name.value}
+                        onChange={(e) => name.onChange(e)}
+                        onBlur={(e) => name.onBlur(e)}
                         minLength="2"
                         maxLength="40"
                     />
@@ -58,12 +129,14 @@ function PopupProfile({ isOpened, onClose, handleUpdateUser }) {
                         id="email-input-id"
                         autoComplete="off"
                         required
-                        value={email}
-                        onChange={handleChangeEmail}
+                        value={email.value}
+                        onChange={(e) => email.onChange(e)}
+                        onBlur={(e) => email.onBlur(e)}
                         minLength="2"
                         maxLength="200"
                     />
-                    <span className="popup__error profession-input-error"></span>
+                    {(email.isDirty && email.isEmpty) && <span className='register__error-text'>Поле не может быть пустым</span>}
+                    {(email.isDirty && email.emailError) && <span className='register__error-text'>Некоректный email</span>}
                     <button className="popup__button" type="submit">123321</button>
                 </form>
                 <button type="button" onClick={onClose} className="popup__close-button" />

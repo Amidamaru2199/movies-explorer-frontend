@@ -4,17 +4,48 @@ import './SavedFilm.css';
 import { getMovies } from '../../utils/MainApi';
 import SavedMovieCard from '../SavedMovieCard/SavedMovieCard';
 
-function SavedFilm() {
+function SavedFilm({ isSavedShortFilm, savedMoviesSearchValue }) {
 
-    const [moviesList, setMoviesList] = useState([]);
+
     const jwt = localStorage.getItem('jwt');
 
+    const [moviesList, setMoviesList] = useState([]);
+    /*const [filteredSavedMoviesList, setFilteredSavedMoviesList] = useState([]);*/
+
+
     useEffect(() => {
-        getMovies(jwt)
-            .then((movies) => {
-                setMoviesList(movies);
+
+        sar()
+
+    }, [isSavedShortFilm]);
+
+    useEffect(() => {
+
+        filter()
+
+    }, [isSavedShortFilm]);
+
+    const sar = () => {
+
+        if (!isSavedShortFilm) {
+            getMovies(jwt)
+                .then((movies) => {
+                    setMoviesList(movies);
+                })
+
+        }
+    }
+
+    const filter = () => {
+
+        if (isSavedShortFilm) {
+            const results = moviesList.filter((movies) => {
+                return movies.duration < 40;
             })
-    }, []);
+            setMoviesList(results);
+        }
+    }
+
 
     return (
 
@@ -24,25 +55,6 @@ function SavedFilm() {
                     {
                         moviesList.map((card) => <SavedMovieCard card={card} />)
                     }
-
-                    {/* <div className='card saved-film__card'>
-                        <img className='card__image' src={promo} alt='Промо фильма' />
-                        <div className='ooo'><p className='card__text'>33 слова о дизайне</p><button className='card__delete-button' /></div>
-                        <p className='card__duration'>1ч42м</p>
-                    </div>
-
-                    <div className='card saved-film__card'>
-                        <img className='card__image' src={promo} alt='Промо фильма' />
-                        <div className='ooo'><p className='card__text'>33 слова о дизайне</p><button className='card__delete-button' /></div>
-                        <p className='card__duration'>1ч42м</p>
-                    </div>
-
-                    <div className='card saved-film__card'>
-                        <img className='card__image' src={promo} alt='Промо фильма' />
-                        <div className='ooo'><p className='card__text'>33 слова о дизайне</p><button className='card__delete-button' /></div>
-                        <p className='card__duration'>1ч42м</p>
-                    </div> */}
-
                 </div>
             </div>
         </div>

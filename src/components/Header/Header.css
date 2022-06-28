@@ -57,6 +57,44 @@
     text-decoration: none;
 }
 
+.header__signin-button-in {
+    display: none;
+}
+
+.header__signup-button-in {
+    display: none;
+}
+
+.header__films {
+    font-family: 'Inter', Arial, sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 18px;
+    color: #FFFFFF;
+    text-decoration: none;
+    margin-right: 20px;
+}
+
+.header__saved-films {
+    font-family: 'Inter', Arial, sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 18px;
+    color: #FFFFFF;
+    text-decoration: none;
+    margin-right: 51px;
+}
+
+.header__films-in {
+    display: none;
+}
+
+.header__saved-films-in {
+    display: none;
+}
+
 .header__profile-button {
     color: #FFFFFF;
     border: none;
