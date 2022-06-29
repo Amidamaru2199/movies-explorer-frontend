@@ -61,9 +61,11 @@ const useInput = (initialValue, validations) => {
     }
 };
 
-
-
-function SearchFormSaved({ handleChangeisSavedShortFilm, handleChangeSavedMoviesSearch }) {
+function SearchFormSaved({
+    handleChangeisSavedShortFilm,
+    handleChangeSavedMoviesSearch,
+    isSavedShortFilm
+}) {
 
     const search = useInput('', { isEmpty: true });
 
@@ -92,7 +94,7 @@ function SearchFormSaved({ handleChangeisSavedShortFilm, handleChangeSavedMovies
                 </form>
                 <div className='search-form-saved__positioning-container'>
                     <label class="search-form-saved__switch">
-                        <input type='checkbox' onChange={handleChangeisSavedShortFilm} />
+                        <input defaultChecked={isSavedShortFilm} type='checkbox' onChange={handleChangeisSavedShortFilm} />
                         <span class="search-form-saved__slider" />
                     </label>
                     <p className='search-form-saved__text'>Короткометражки</p>

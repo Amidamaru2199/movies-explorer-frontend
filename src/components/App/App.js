@@ -40,8 +40,8 @@ function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
   const [moviesList, setMoviesList] = useState([]);
 
-  const [moviesSearchValue, setMoviesSearchValue] = useState('');
-  const [isShortFilm, setIsShortFilm] = useState(false);
+  const [moviesSearchValue, setMoviesSearchValue] = useState(localStorage.moviesSearchValue || '');
+  const [isShortFilm, setIsShortFilm] = useState(localStorage.isShortFilm === 'true');
 
   const [savedMoviesSearchValue, setSavedMoviesSearchValue] = useState('');
   const [isSavedShortFilm, setIsSavedShortFilm] = useState(false);
@@ -50,24 +50,37 @@ function App() {
   const history = useHistory();
 
 
+
   const handleChangeMoviesSearch = (value) => {
     setMoviesSearchValue(value);
-    //console.log(value)
+    localStorage.setItem('moviesSearchValue', value)
   };
 
   const handleChangeisShortFilm = (value) => {
-    setIsShortFilm(!isShortFilm);
-    console.log(isShortFilm)
+    setIsShortFilm(!isShortFilm)
+
+    const isShortFilmLS = localStorage.getItem('isShortFilm');
+    if (!isShortFilmLS || isShortFilmLS === 'false') {
+      localStorage.setItem('isShortFilm', 'true')
+    } else {
+      localStorage.setItem('isShortFilm', 'false')
+    }
   };
 
   const handleChangeSavedMoviesSearch = (value) => {
     setSavedMoviesSearchValue(value);
-    //console.log(value)
+    localStorage.setItem('savedMoviesSearchValue', value)
   };
 
   const handleChangeisSavedShortFilm = (value) => {
     setIsSavedShortFilm(!isSavedShortFilm);
-    console.log(isSavedShortFilm)
+
+    const isSavedShortFilmLS = localStorage.getItem('isSavedShortFilm');
+    if (!isSavedShortFilmLS || isSavedShortFilmLS === 'false') {
+      localStorage.setItem('isSavedShortFilm', 'true')
+    } else {
+      localStorage.setItem('isSavedShortFilm', 'false')
+    }
   };
 
   useEffect(() => {
@@ -115,11 +128,11 @@ function App() {
             .then((res) => {
               localStorage.setItem('jwt', res.token);
               getUserInfo(res.token);
-              history.push('/movies')
+              setLoggedIn(true);
+              history.push('/movies');
+              /*setIsInfoTooltipPopupOpen(true)
+              setIsSuccess(true)*/
             })
-          setIsInfoTooltipPopupOpen(true)
-          setIsSuccess(true)
-          history.push('/movies')
         }
       }).catch((err) => { console.log(err) })
   };
@@ -136,15 +149,18 @@ function App() {
         if (res.token) {
           localStorage.setItem('jwt', res.token);
           getUserInfo(res.token);
+          setLoggedIn(true);
           history.push('/movies')
         }
-
       })
       .catch((err) => { console.log(err) })
   };
 
   function handleLogOut() {
     localStorage.removeItem('jwt');
+    localStorage.removeItem('moviesSearchValue');
+    localStorage.removeItem('isShortFilm');
+    localStorage.removeItem('cards');
     setLoggedIn(false);
     setCurrentUser({});
     history.push('/');
@@ -195,17 +211,40 @@ function App() {
           <ProtectedRoute path='/saved-movies' loggedIn={loggedIn}>
             <div className='app__container'>
               <FilmsHeader />
-              <SearchFormSaved handleChangeisSavedShortFilm={handleChangeisSavedShortFilm} isSavedShortFilm={isSavedShortFilm} savedMoviesSearchValue={savedMoviesSearchValue} handleChangeSavedMoviesSearch={handleChangeSavedMoviesSearch} />
-              <SavedFilm isSavedShortFilm={isSavedShortFilm} moviesSearchValue={moviesSearchValue} />
+
+              <SearchFormSaved
+                handleChangeisSavedShortFilm={handleChangeisSavedShortFilm}
+                isSavedShortFilm={isSavedShortFilm}
+                savedMoviesSearchValue={savedMoviesSearchValue}
+                handleChangeSavedMoviesSearch={handleChangeSavedMoviesSearch}
+              />
+
+              <SavedFilm
+                isSavedShortFilm={isSavedShortFilm}
+                moviesSearchValue={moviesSearchValue}
+              />
+
               <Footer />
             </div>
           </ProtectedRoute>
 
-          <ProtectedRoute path='/movies' loggedIn={loggedIn}>
+          <ProtectedRoute exact path='/movies' loggedIn={loggedIn}>
             <div className='app__container'>
               <FilmsHeader />
-              <SearchForm handleChangeisShortFilm={handleChangeisShortFilm} isShortFilm={isShortFilm} moviesSearchValue={moviesSearchValue} handleChangeMoviesSearch={handleChangeMoviesSearch} />
-              <MoviesCardList isShortFilm={isShortFilm} moviesList={moviesList} moviesSearchValue={moviesSearchValue} />
+
+              <SearchForm
+                handleChangeisShortFilm={handleChangeisShortFilm}
+                isShortFilm={isShortFilm}
+                moviesSearchValue={moviesSearchValue}
+                handleChangeMoviesSearch={handleChangeMoviesSearch}
+              />
+
+              <MoviesCardList
+                isShortFilm={isShortFilm}
+                moviesList={moviesList}
+                moviesSearchValue={moviesSearchValue}
+              />
+
               <Footer />
             </div>
           </ProtectedRoute>

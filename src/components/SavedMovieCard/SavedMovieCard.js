@@ -4,14 +4,18 @@ import './SavedMovieCard.css';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import { deleteMovies } from '../../utils/MainApi';
 
-function SavedMovieCard({ card }) {
+function SavedMovieCard({ card, handleCardDelete }) {
 
     const currentUser = useContext(CurrentUserContext);
 
-    function moveDeleteHandler() {
+    /*function moveDeleteHandler() {
         const jwt = localStorage.getItem('jwt');
-        deleteMovies(card._id, jwt)
-    }
+        deleteMovies(card._id, jwt);
+    }*/
+
+    function handleDeleteClick() {
+        handleCardDelete(card);
+    };
 
     function getTimeFromMins(mins) {
         if (mins === 60) {
@@ -31,7 +35,7 @@ function SavedMovieCard({ card }) {
     return (
         <div className='card movies-card-list__card'>
             <a className='card__link' target="blank" href={card.trailerLink}><img className='card__image' src={card.image} alt='Промо фильма' /></a>
-            <div className='ooo'><p className='card__text'>{card.nameRU}</p><button onClick={moveDeleteHandler} className='card__delete-button' /></div>
+            <div className='ooo'><p className='card__text'>{card.nameRU}</p><button onClick={handleDeleteClick} className='card__delete-button' /></div>
             <p className='card__duration'>{getTimeFromMins(card.duration)}</p>
 
         </div>

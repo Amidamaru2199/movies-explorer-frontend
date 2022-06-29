@@ -1,16 +1,28 @@
 import React, { useEffect, useState } from 'react';
 import '../../vendor/normalize.css';
 import './MoviesCardList.css';
-//import { getMovies } from '../../utils/MoviesApi';
 import MovieCard from '../MovieCard/MovieCard';
 
 function MoviesCardList({ isShortFilm, moviesSearchValue, moviesList }) {
-    // const [moviesList, setMoviesList] = useState([]);
     const [filteredMoviesList, setFilteredMoviesList] = useState(moviesList);
-    const [showMore, setShowMore] = useState(false);
+    console.log('MoviesCardList > filteredMoviesList', filteredMoviesList);
+    console.log('MoviesCardList > moviesList', moviesList);
+    const [numberOfItems, setNumberOfItems] = useState(func());
+    const [number, setNumber] = useState(false);
 
     function handleClick() {
-        setShowMore(true)
+        setNumberOfItems(numberOfItems + func1())
+    }
+
+    function func1() {
+        if (window.innerWidth >= 1280) {
+            return 4;
+        }
+        if (window.innerWidth >= 768) {
+            return 2;
+        } if (window.innerWidth >= 320) {
+            return 2;
+        }
     }
 
     function func() {
@@ -24,46 +36,41 @@ function MoviesCardList({ isShortFilm, moviesSearchValue, moviesList }) {
         }
     }
 
-    const numberOfItems = showMore ? filteredMoviesList.length : func();
+    //const numberOfItems = showMore ? filteredMoviesList.length : func();
 
-    // useEffect(() => {
-    //     getMovies()
-    //         .then((movies) => {
-    //             setMoviesList(movies)
-    //             if (moviesSearchValue !== '') {
-    //                 filter();
-    //             }
-    //         })
-    //     /*const cards = JSON.parse(localStorage.getItem('cards'));*/
-    // }, []);
 
     useEffect(() => {
+        console.log('MoviesCardList > useEffect');
+        filter(moviesSearchValue, isShortFilm, moviesList);
+    }, [moviesSearchValue, isShortFilm, moviesList]);
 
-        filter()
 
-    }, [moviesSearchValue, isShortFilm]);
-
-    const filter = () => {
+    const filter = (moviesSearchValue, isShortFilm, moviesList) => {
+        console.log('MoviesCardList > ', moviesSearchValue, isShortFilm);
         const keyword = moviesSearchValue.toLowerCase();
         if (keyword === '') {
-            setFilteredMoviesList([])
-            return
+            return;
         }
         let results = moviesList;
 
-        if (keyword !== '') {
+        results = results.filter((movies) => {
+            return movies.nameRU.toLowerCase().includes(keyword);
+        });
+
+        if (results.length === 0) {
+            setNumber(true)
+        } else setNumber(false)
+
+        if (isShortFilm) {
             results = results.filter((movies) => {
-                return movies.nameRU.toLowerCase().includes(keyword);
-            });
-
-            if (isShortFilm) {
-                results = results.filter((movies) => {
-                    return movies.duration < 40;
-                })
-
-            }
+                return movies.duration < 40;
+            })
         }
-        /*localStorage.setItem('cards', JSON.stringify(results));*/
+
+        if (results.length === 0) {
+            setNumber(true)
+        } else setNumber(false)
+
         setFilteredMoviesList(results);
     };
 
@@ -78,7 +85,8 @@ function MoviesCardList({ isShortFilm, moviesSearchValue, moviesList }) {
                         filteredMoviesList.slice(0, numberOfItems).map((card) => <MovieCard card={card} />)
                     }
                 </div>
-                <button onClick={handleClick} className={(filteredMoviesList.length === 0) ? 'movies-card-list__continuation-button_none' : 'movies-card-list__continuation-button'}>Еще</button>
+                {numberOfItems < filteredMoviesList.length && <button onClick={handleClick} className={(filteredMoviesList.length === 0) ? 'movies-card-list__continuation-button_none' : 'movies-card-list__continuation-button'}>Еще</button>}
+                {number && <p className='movies-card-list__err' >Ничего не найдено:)</p>}
             </div>
         </div>
 

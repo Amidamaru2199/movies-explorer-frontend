@@ -6,16 +6,11 @@ import { savedMovies, deleteMovies } from '../../utils/MainApi';
 
 let cardID;
 function MovieCard({ /*nameRU, url, duration, trailerLink*/ card }) {
-
-    console.log(card)
-
-    const currentUser = useContext(CurrentUserContext);
-
+    //const currentUser = useContext(CurrentUserContext);
     const [isLiked, setIsLiked] = useState(false);
-
     const nomo = `https://api.nomoreparties.co/${card.image.url}`;
 
-
+    localStorage.setItem('isLiked', isLiked);
 
     function cardLike() {
 

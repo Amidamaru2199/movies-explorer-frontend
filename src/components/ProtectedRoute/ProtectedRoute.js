@@ -5,7 +5,7 @@ import React from "react";
 const ProtectedRoute = ({ children, loggedIn }) => {
 
     return (
-        loggedIn ? children : <Redirect to="/sign-in" />
+        loggedIn ? children : <Redirect to="/" />
     )
 };
 

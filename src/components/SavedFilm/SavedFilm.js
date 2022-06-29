@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import '../../vendor/normalize.css';
 import './SavedFilm.css';
-import { getMovies } from '../../utils/MainApi';
+import { getMovies, deleteMovies } from '../../utils/MainApi';
 import SavedMovieCard from '../SavedMovieCard/SavedMovieCard';
 
 function SavedFilm({ isSavedShortFilm, savedMoviesSearchValue }) {
@@ -12,12 +12,15 @@ function SavedFilm({ isSavedShortFilm, savedMoviesSearchValue }) {
     const [moviesList, setMoviesList] = useState([]);
     /*const [filteredSavedMoviesList, setFilteredSavedMoviesList] = useState([]);*/
 
+    function handleCardDelete(deletedCard) {
 
-    useEffect(() => {
+        deleteMovies(deletedCard._id, jwt).then(() => {
 
-        sar()
+            setMoviesList(moviesList.filter(card => card._id !== deletedCard._id));
+        })
+            .catch((err) => console.log(err))
+    };
 
-    }, [isSavedShortFilm]);
 
     useEffect(() => {
 
@@ -25,7 +28,9 @@ function SavedFilm({ isSavedShortFilm, savedMoviesSearchValue }) {
 
     }, [isSavedShortFilm]);
 
-    const sar = () => {
+
+
+    const filter = () => {
 
         if (!isSavedShortFilm) {
             getMovies(jwt)
@@ -34,9 +39,6 @@ function SavedFilm({ isSavedShortFilm, savedMoviesSearchValue }) {
                 })
 
         }
-    }
-
-    const filter = () => {
 
         if (isSavedShortFilm) {
             const results = moviesList.filter((movies) => {
@@ -53,7 +55,7 @@ function SavedFilm({ isSavedShortFilm, savedMoviesSearchValue }) {
             <div className='saved-film__container'>
                 <div className='saved-film__cards'>
                     {
-                        moviesList.map((card) => <SavedMovieCard card={card} />)
+                        moviesList.map((card) => <SavedMovieCard card={card} handleCardDelete={handleCardDelete} />)
                     }
                 </div>
             </div>
