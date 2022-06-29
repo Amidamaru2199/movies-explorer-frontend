@@ -2,14 +2,14 @@ import React, { useEffect, useState } from 'react';
 import '../../vendor/normalize.css';
 import './MoviesCardList.css';
 import MovieCard from '../MovieCard/MovieCard';
+import Preloader from '../Preloader/Preloader';
 
-function MoviesCardList({ isShortFilm, moviesSearchValue, moviesList }) {
-    const [filteredMoviesList, setFilteredMoviesList] = useState(moviesList);
-    console.log('MoviesCardList > filteredMoviesList', filteredMoviesList);
-    console.log('MoviesCardList > moviesList', moviesList);
+function MoviesCardList({ isShortFilm, moviesSearchValue, moviesList, savedMoviesIds, viewPreloader }) {
+    const [filteredMoviesList, setFilteredMoviesList] = useState([]);
     const [numberOfItems, setNumberOfItems] = useState(func());
     const [number, setNumber] = useState(false);
 
+    console.log('MoviesCardList > useEffect');
     function handleClick() {
         setNumberOfItems(numberOfItems + func1())
     }
@@ -40,7 +40,6 @@ function MoviesCardList({ isShortFilm, moviesSearchValue, moviesList }) {
 
 
     useEffect(() => {
-        console.log('MoviesCardList > useEffect');
         filter(moviesSearchValue, isShortFilm, moviesList);
     }, [moviesSearchValue, isShortFilm, moviesList]);
 
@@ -82,11 +81,13 @@ function MoviesCardList({ isShortFilm, moviesSearchValue, moviesList }) {
             <div className='movies-card-list__container'>
                 <div className='movies-card-list__cards'>
                     {
-                        filteredMoviesList.slice(0, numberOfItems).map((card) => <MovieCard card={card} />)
+                        filteredMoviesList.slice(0, numberOfItems).map((card, index) => <MovieCard key={index} card={card} savedMoviesIds={savedMoviesIds} />)
                     }
+                    {viewPreloader && <Preloader />}
+                    {number && <p className='movies-card-list__err' >Ничего не найдено:)</p>}
                 </div>
                 {numberOfItems < filteredMoviesList.length && <button onClick={handleClick} className={(filteredMoviesList.length === 0) ? 'movies-card-list__continuation-button_none' : 'movies-card-list__continuation-button'}>Еще</button>}
-                {number && <p className='movies-card-list__err' >Ничего не найдено:)</p>}
+
             </div>
         </div>
 

@@ -5,9 +5,10 @@ import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import { savedMovies, deleteMovies } from '../../utils/MainApi';
 
 let cardID;
-function MovieCard({ /*nameRU, url, duration, trailerLink*/ card }) {
+function MovieCard({ /*nameRU, url, duration, trailerLink*/ card, savedMoviesIds }) {
     //const currentUser = useContext(CurrentUserContext);
-    const [isLiked, setIsLiked] = useState(false);
+    const savedMovieId = savedMoviesIds[card.id]
+    const [isLiked, setIsLiked] = useState(Boolean(savedMovieId));
     const nomo = `https://api.nomoreparties.co/${card.image.url}`;
 
     localStorage.setItem('isLiked', isLiked);
@@ -17,6 +18,11 @@ function MovieCard({ /*nameRU, url, duration, trailerLink*/ card }) {
         const jwt = localStorage.getItem('jwt');
         if (isLiked) {
             setIsLiked(false);
+
+            if (savedMovieId) {
+                cardID = savedMovieId
+            }
+
             deleteMovies(cardID, jwt)
         } else {
             setIsLiked(true);

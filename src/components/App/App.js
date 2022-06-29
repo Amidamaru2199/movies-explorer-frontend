@@ -19,13 +19,14 @@ import SavedFilm from '../SavedFilm/SavedFilm';
 import React, { useEffect, useState } from 'react';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import {
-  BrowserRouter as Router,
   Switch,
   Route,
   useHistory
 } from "react-router-dom";
 import { register, authorization, getUserInfo, editProfile } from '../../utils/MainApi';
 import { getMovies } from '../../utils/MoviesApi';
+import { getMovies as getSavedMovies } from '../../utils/MainApi';
+
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import PopapProfile from '../PopapProfile/PopapProfile';
 import InfoTooltip from '../InfoTooltip/InfoTooltip';
@@ -38,15 +39,18 @@ function App() {
   const [isInfoTooltipPopupOpen, setIsInfoTooltipPopupOpen] = useState(false);
   const [isInfoTooltipProfilePopupOpen, setIsInfoTooltipProfilePopupOpen] = useState(false);
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
-  const [moviesList, setMoviesList] = useState([]);
 
-  const [moviesSearchValue, setMoviesSearchValue] = useState(localStorage.moviesSearchValue || '');
-  const [isShortFilm, setIsShortFilm] = useState(localStorage.isShortFilm === 'true');
+  const [moviesList, setMoviesList] = useState([]);
+  const [savedMoviesIds, setSavedMoviesIds] = useState([]);
+
+  const [moviesSearchValue, setMoviesSearchValue] = useState('');
+  const [isShortFilm, setIsShortFilm] = useState(false);
 
   const [savedMoviesSearchValue, setSavedMoviesSearchValue] = useState('');
   const [isSavedShortFilm, setIsSavedShortFilm] = useState(false);
 
   const [loggedIn, setLoggedIn] = useState(Boolean(localStorage.getItem('jwt')));//наш стейт
+  const [viewPreloader, setViewPreloader] = useState(true);
   const history = useHistory();
 
 
@@ -89,11 +93,25 @@ function App() {
 
   useEffect(() => {
     if (!loggedIn) return;
+
+
     getMovies()
       .then((movies) => {
         setMoviesList(movies)
+        setViewPreloader(false);
       })
+
+    getSavedMovies(localStorage.getItem('jwt'))
+      .then((savedMovies) => {
+        const ids = savedMovies.reduce((ids, savedMovie) => {
+          ids[savedMovie.movieId] = savedMovie._id
+          return ids;
+        }, {})
+        setSavedMoviesIds(ids);
+      })
+
   }, [loggedIn]);
+
 
   function tokenCheck() {
     if (!localStorage.getItem('jwt')) return;
@@ -221,7 +239,7 @@ function App() {
 
               <SavedFilm
                 isSavedShortFilm={isSavedShortFilm}
-                moviesSearchValue={moviesSearchValue}
+                savedMoviesSearchValue={savedMoviesSearchValue}
               />
 
               <Footer />
@@ -240,6 +258,8 @@ function App() {
               />
 
               <MoviesCardList
+                viewPreloader={viewPreloader}
+                savedMoviesIds={savedMoviesIds}
                 isShortFilm={isShortFilm}
                 moviesList={moviesList}
                 moviesSearchValue={moviesSearchValue}
