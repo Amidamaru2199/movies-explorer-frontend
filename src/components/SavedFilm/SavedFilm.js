@@ -75,6 +75,7 @@ function SavedFilm({ isSavedShortFilm, savedMoviesSearchValue }) {
                         filteredSavedMoviesList.map((card, index) => <SavedMovieCard key={index} card={card} handleCardDelete={handleCardDelete} />)
                     }
                 </div>
+                {number && <div className='movies-card-list__err' >Ничего не найдено:)</div>}
             </div>
         </div>
 

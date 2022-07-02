@@ -43,8 +43,8 @@ function App() {
   const [moviesList, setMoviesList] = useState([]);
   const [savedMoviesIds, setSavedMoviesIds] = useState([]);
 
-  const [moviesSearchValue, setMoviesSearchValue] = useState('');
-  const [isShortFilm, setIsShortFilm] = useState(false);
+  const [moviesSearchValue, setMoviesSearchValue] = useState(localStorage.getItem('moviesSearchValue') || '');
+  const [isShortFilm, setIsShortFilm] = useState(localStorage.getItem('isShortFilm') === 'true');
 
   const [savedMoviesSearchValue, setSavedMoviesSearchValue] = useState('');
   const [isSavedShortFilm, setIsSavedShortFilm] = useState(false);
@@ -178,7 +178,12 @@ function App() {
     localStorage.removeItem('jwt');
     localStorage.removeItem('moviesSearchValue');
     localStorage.removeItem('isShortFilm');
-    localStorage.removeItem('cards');
+    localStorage.removeItem('isSavedShortFilm');
+    localStorage.removeItem('savedMoviesSearchValue');
+    setMoviesSearchValue('');
+    setIsShortFilm(false);
+    setSavedMoviesSearchValue('');
+    setIsSavedShortFilm(false);
     setLoggedIn(false);
     setCurrentUser({});
     history.push('/');

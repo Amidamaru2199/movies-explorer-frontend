@@ -84,8 +84,8 @@ function MoviesCardList({ isShortFilm, moviesSearchValue, moviesList, savedMovie
                         filteredMoviesList.slice(0, numberOfItems).map((card, index) => <MovieCard key={index} card={card} savedMoviesIds={savedMoviesIds} />)
                     }
                     {viewPreloader && <Preloader />}
-                    {number && <p className='movies-card-list__err' >Ничего не найдено:)</p>}
                 </div>
+                {number && <p className='movies-card-list__err' >Ничего не найдено:)</p>}
                 {numberOfItems < filteredMoviesList.length && <button onClick={handleClick} className={(filteredMoviesList.length === 0) ? 'movies-card-list__continuation-button_none' : 'movies-card-list__continuation-button'}>Еще</button>}
 
             </div>

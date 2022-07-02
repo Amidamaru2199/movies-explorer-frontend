@@ -74,16 +74,15 @@ function PopupProfile({ isOpened, onClose, handleUpdateUser }) {
     const name = useInput("", { isEmpty: true, minLength: 5 });
 
 
+    const [name1, setName] = useState(name.value);
+    const [email1, setEmail] = useState(email.value);
 
-    /*const [name, setName] = useState("");
-    const [email, setEmail] = useState("");*/
-
-    /*useEffect(() => {
+    useEffect(() => {
         setName(currentUser.name);
         setEmail(currentUser.email);
     }, [currentUser, isOpened]);
 
-    function handleChangeName(e) {
+    /*function handleChangeName(e) {
         setName(e.target.value);
     };
 
@@ -103,8 +102,8 @@ function PopupProfile({ isOpened, onClose, handleUpdateUser }) {
 
     return (
         <div className={`popup popup_type_edit ${isOpened && 'popup_is-opened'}`}>
-            <div className="popup__container">
-                <h2 className="popup__title">456</h2>
+            <div className="popup_type_edit__container">
+                <h2 className="popup__title">Редактирование профиля</h2>
                 <form onSubmit={handleSubmit} className="popup__form">
                     <input
                         placeholder="Имя"
@@ -113,14 +112,11 @@ function PopupProfile({ isOpened, onClose, handleUpdateUser }) {
                         className="popup__input"
                         id="name-input-id"
                         autoComplete="off"
-                        required
                         value={name.value}
                         onChange={(e) => name.onChange(e)}
                         onBlur={(e) => name.onBlur(e)}
-                        minLength="2"
-                        maxLength="40"
                     />
-                    <span className="popup__error name-input-error"></span>
+                    {(email.isDirty && email.isEmpty) && <span className='popup__error-text'>Поле не может быть пустым</span>}
                     <input
                         placeholder="Email"
                         name="email"
@@ -128,16 +124,13 @@ function PopupProfile({ isOpened, onClose, handleUpdateUser }) {
                         className="popup__input"
                         id="email-input-id"
                         autoComplete="off"
-                        required
                         value={email.value}
                         onChange={(e) => email.onChange(e)}
                         onBlur={(e) => email.onBlur(e)}
-                        minLength="2"
-                        maxLength="200"
                     />
-                    {(email.isDirty && email.isEmpty) && <span className='register__error-text'>Поле не может быть пустым</span>}
-                    {(email.isDirty && email.emailError) && <span className='register__error-text'>Некоректный email</span>}
-                    <button className="popup__button" type="submit">123321</button>
+                    {(email.isDirty && email.isEmpty) && <span className='popup__error-text'>Поле не может быть пустым</span>}
+                    {(email.isDirty && email.emailError) && <span className='popup__error-text'>Некоректный email</span>}
+                    <button type='submit' disabled={!email.inputValid || !name.inputValid} className={(email.inputValid && name.inputValid) ? 'popup__button' : 'popup__button-in'} >Применить</button>
                 </form>
                 <button type="button" onClick={onClose} className="popup__close-button" />
             </div>
