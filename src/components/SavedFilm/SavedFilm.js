@@ -4,7 +4,7 @@ import './SavedFilm.css';
 import { getMovies, deleteMovies } from '../../utils/MainApi';
 import SavedMovieCard from '../SavedMovieCard/SavedMovieCard';
 
-function SavedFilm({ isSavedShortFilm, savedMoviesSearchValue }) {
+function SavedFilm({ isSavedShortFilm, savedMoviesSearchValue, updateSavedMoviesID }) {
     const jwt = localStorage.getItem('jwt');
 
     // const [moviesList, setMoviesList] = useState([]);
@@ -17,6 +17,7 @@ function SavedFilm({ isSavedShortFilm, savedMoviesSearchValue }) {
             const newSavedMoviesList = savedMoviesList.filter(card => card._id !== deletedCard._id)
             setSavedMoviesList(newSavedMoviesList);
             setFilteredSavedMoviesList(newSavedMoviesList);
+            updateSavedMoviesID()
         })
             .catch((err) => console.log(err))
     };
