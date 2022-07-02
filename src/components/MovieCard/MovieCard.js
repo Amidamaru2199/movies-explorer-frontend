@@ -5,8 +5,15 @@ import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import { savedMovies, deleteMovies } from '../../utils/MainApi';
 
 let cardID;
-function MovieCard({ /*nameRU, url, duration, trailerLink*/ card, savedMoviesIds }) {
+function MovieCard({ /*nameRU, url, duration, trailerLink*/ card, savedMoviesIds, updateSavedMoviesID }) {
     //const currentUser = useContext(CurrentUserContext);
+
+
+    useEffect(() => {
+        const savedMovieId = savedMoviesIds[card.id];
+        setIsLiked(Boolean(savedMovieId))
+    }, [savedMoviesIds, card.id])
+
     const savedMovieId = savedMoviesIds[card.id]
     const [isLiked, setIsLiked] = useState(Boolean(savedMovieId));
     const nomo = `https://api.nomoreparties.co/${card.image.url}`;
@@ -14,7 +21,6 @@ function MovieCard({ /*nameRU, url, duration, trailerLink*/ card, savedMoviesIds
     localStorage.setItem('isLiked', isLiked);
 
     function cardLike() {
-
         const jwt = localStorage.getItem('jwt');
         if (isLiked) {
             setIsLiked(false);
@@ -23,13 +29,19 @@ function MovieCard({ /*nameRU, url, duration, trailerLink*/ card, savedMoviesIds
                 cardID = savedMovieId
             }
 
-            deleteMovies(cardID, jwt)
+            deleteMovies(cardID, jwt).then((data) => {
+                console.log('data', data);
+                updateSavedMoviesID()
+
+            })
         } else {
             setIsLiked(true);
+            console.log('??', card);
             savedMovies(card, jwt)
-                .then((card) => {
-                    console.log(card)
-                    cardID = card._id
+                .then((savedCard) => {
+                    console.log('>>', card)
+                    cardID = savedCard._id
+                    updateSavedMoviesID()
                 })
         }
     }

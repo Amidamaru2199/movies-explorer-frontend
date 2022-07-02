@@ -101,17 +101,19 @@ function App() {
         setViewPreloader(false);
       })
 
-    getSavedMovies(localStorage.getItem('jwt'))
-      .then((savedMovies) => {
-        const ids = savedMovies.reduce((ids, savedMovie) => {
-          ids[savedMovie.movieId] = savedMovie._id
-          return ids;
-        }, {})
-        setSavedMoviesIds(ids);
-      })
-
+      updateSavedMoviesID()
   }, [loggedIn]);
 
+  function updateSavedMoviesID() {
+    getSavedMovies(localStorage.getItem('jwt'))
+    .then((savedMovies) => {
+      const ids = savedMovies.reduce((ids, savedMovie) => {
+        ids[savedMovie.movieId] = savedMovie._id
+        return ids;
+      }, {})
+      setSavedMoviesIds(ids);
+    })
+  }
 
   function tokenCheck() {
     if (!localStorage.getItem('jwt')) return;
@@ -145,9 +147,11 @@ function App() {
           authorization(password, email)
             .then((res) => {
               localStorage.setItem('jwt', res.token);
-              getUserInfo(res.token);
-              setLoggedIn(true);
-              history.push('/movies');
+              getUserInfo(res.token).then((currentUserData) => {
+                setCurrentUser({ name: currentUserData.name, email: currentUserData.email })
+                setLoggedIn(true);
+                history.push('/movies')
+              });
               /*setIsInfoTooltipPopupOpen(true)
               setIsSuccess(true)*/
             })
@@ -166,9 +170,11 @@ function App() {
         }
         if (res.token) {
           localStorage.setItem('jwt', res.token);
-          getUserInfo(res.token);
-          setLoggedIn(true);
-          history.push('/movies')
+          getUserInfo(res.token).then((currentUserData) => {
+            setCurrentUser({ name: currentUserData.name, email: currentUserData.email })
+            setLoggedIn(true);
+            history.push('/movies')
+          });
         }
       })
       .catch((err) => { console.log(err) })
@@ -245,6 +251,8 @@ function App() {
               <SavedFilm
                 isSavedShortFilm={isSavedShortFilm}
                 savedMoviesSearchValue={savedMoviesSearchValue}
+                updateSavedMoviesID={updateSavedMoviesID}
+
               />
 
               <Footer />
@@ -268,6 +276,7 @@ function App() {
                 isShortFilm={isShortFilm}
                 moviesList={moviesList}
                 moviesSearchValue={moviesSearchValue}
+                updateSavedMoviesID={updateSavedMoviesID}
               />
 
               <Footer />
@@ -297,11 +306,15 @@ function App() {
           </Route>
 
         </Switch>
-        <PopapProfile
-          isOpened={isEditProfilePopupOpen}
-          onClose={closeAllPopups}
-          handleUpdateUser={handleUpdateUser}
-        />
+
+        {currentUser.name && currentUser.email && (
+          <PopapProfile
+            isOpened={isEditProfilePopupOpen}
+            onClose={closeAllPopups}
+            handleUpdateUser={handleUpdateUser}
+          />)
+        }
+
         <InfoTooltipProfile isOpened={isInfoTooltipProfilePopupOpen} onClose={closeAllPopups} isSuccess={isSuccess} />
         <InfoTooltip isOpened={isInfoTooltipPopupOpen} onClose={closeAllPopups} isSuccess={isSuccess} />
       </CurrentUserContext.Provider>

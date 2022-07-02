@@ -4,7 +4,7 @@ import './MoviesCardList.css';
 import MovieCard from '../MovieCard/MovieCard';
 import Preloader from '../Preloader/Preloader';
 
-function MoviesCardList({ isShortFilm, moviesSearchValue, moviesList, savedMoviesIds, viewPreloader }) {
+function MoviesCardList({ isShortFilm, moviesSearchValue, moviesList, savedMoviesIds, viewPreloader, setSavedMoviesIds, updateSavedMoviesID }) {
     const [filteredMoviesList, setFilteredMoviesList] = useState([]);
     const [numberOfItems, setNumberOfItems] = useState(func());
     const [number, setNumber] = useState(false);
@@ -81,7 +81,7 @@ function MoviesCardList({ isShortFilm, moviesSearchValue, moviesList, savedMovie
             <div className='movies-card-list__container'>
                 <div className='movies-card-list__cards'>
                     {
-                        filteredMoviesList.slice(0, numberOfItems).map((card, index) => <MovieCard key={index} card={card} savedMoviesIds={savedMoviesIds} />)
+                        filteredMoviesList.slice(0, numberOfItems).map((card, index) => <MovieCard key={index} card={card} savedMoviesIds={savedMoviesIds} updateSavedMoviesID={updateSavedMoviesID} />)
                     }
                     {viewPreloader && <Preloader />}
                 </div>

@@ -24,9 +24,11 @@ const useValidation = (value, validations) => {
                 case 'isEmail':
                     const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
                     re.test(String(value).toLowerCase()) ? setEmailError(false) : setEmailError(true);
+
+                default: {}
             }
         }
-    }, [value])
+    }, [value, validations])
 
     useEffect(() => {
         if (isEmpty || minLengthErrror || emailError) {
@@ -69,26 +71,8 @@ const useInput = (initialValue, validations) => {
 
 function PopupProfile({ isOpened, onClose, handleUpdateUser }) {
     const currentUser = useContext(CurrentUserContext);
-
-    const email = useInput("", { isEmpty: true, minLength: 3, isEmail: true });
-    const name = useInput("", { isEmpty: true, minLength: 5 });
-
-
-    const [name1, setName] = useState(name.value);
-    const [email1, setEmail] = useState(email.value);
-
-    useEffect(() => {
-        setName(currentUser.name);
-        setEmail(currentUser.email);
-    }, [currentUser, isOpened]);
-
-    /*function handleChangeName(e) {
-        setName(e.target.value);
-    };
-
-    function handleChangeEmail(e) {
-        setEmail(e.target.value);
-    };**/
+    const email = useInput(currentUser.email || '', { isEmpty: true, minLength: 3, isEmail: true });
+    const name = useInput(currentUser.name || '', { isEmpty: true, minLength: 5 });
 
     function handleSubmit(event) {
         event.preventDefault();
@@ -112,7 +96,7 @@ function PopupProfile({ isOpened, onClose, handleUpdateUser }) {
                         className="popup__input"
                         id="name-input-id"
                         autoComplete="off"
-                        value={name.value}
+                        value={name?.value}
                         onChange={(e) => name.onChange(e)}
                         onBlur={(e) => name.onBlur(e)}
                     />
@@ -124,7 +108,7 @@ function PopupProfile({ isOpened, onClose, handleUpdateUser }) {
                         className="popup__input"
                         id="email-input-id"
                         autoComplete="off"
-                        value={email.value}
+                        value={email?.value}
                         onChange={(e) => email.onChange(e)}
                         onBlur={(e) => email.onBlur(e)}
                     />
