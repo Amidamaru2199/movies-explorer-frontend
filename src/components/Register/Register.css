@@ -12,7 +12,7 @@
 
 .register {
     background-color: #202020;
-    height: 100vh
+    min-height: 100vh
 }
 
 .register__container {
@@ -88,6 +88,11 @@
     text-align: center;
     color: #FFFFFF;
     margin-top: 97px;
+}
+
+.register__button:hover {
+    cursor: pointer;
+    background-color: #005cf5;
 }
 
 .register__button-in {
@@ -166,5 +171,10 @@
     .register__login-link {
         font-size: 12px;
         line-height: 15px;
+    }
+
+    .register__error-text {
+        margin-left: 30px;
+        margin-right: 30px;
     }
 }

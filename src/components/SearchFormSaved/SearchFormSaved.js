@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import '../../vendor/normalize.css';
-import './SearchForm.css';
+import './SearchFormSaved.css';
 
 const useValidation = (value, validations) => {
 
@@ -61,27 +61,25 @@ const useInput = (initialValue, validations) => {
     }
 };
 
-function SearchForm({
-    handleChangeisShortFilm,
-    isShortFilm,
-    moviesSearchValue,
-    handleChangeMoviesSearch
+function SearchFormSaved({
+    handleChangeisSavedShortFilm,
+    handleChangeSavedMoviesSearch,
+    isSavedShortFilm
 }) {
 
-    const search = useInput(moviesSearchValue, { isEmpty: true });
-
+    const search = useInput('', { isEmpty: true });
 
     const onSubmit = (event) => {
         event.preventDefault();
 
-        handleChangeMoviesSearch(search.value)
+        handleChangeSavedMoviesSearch(search.value)
     }
 
     return (
 
-        <div className='search-form'>
-            <div className='search-form__container'>
-                <form onSubmit={onSubmit} className='search-form__form'>
+        <div className='search-form-saved'>
+            <div className='search-form-saved__container'>
+                <form onSubmit={onSubmit} className='search-form-saved__form'>
                     <input
                         onBlur={search.onBlur}
                         name='film'
@@ -89,17 +87,17 @@ function SearchForm({
                         autoComplete='off'
                         value={search.value}
                         type='text'
-                        className='search-form__input'
+                        className='search-form-saved__input'
                         placeholder='Фильм' />
-                    {(search.isDirty && search.isEmpty) && <span className='search-form__error'>{'Нужно ввести ключевое слово'}</span>}
-                    <button disabled={!search.inputValid} className={(!search.inputValid) ? 'search-form__button_invalid' : 'search-form__button'} type='submit' />
+                    {(search.isDirty && search.isEmpty) && <span className='search-form-saved__error'>{'Нужно ввести ключевое слово'}</span>}
+                    <button disabled={!search.inputValid} className={(!search.inputValid) ? 'search-form-saved__button_invalid' : 'search-form-saved__button'} type='submit' />
                 </form>
-                <div className='search-form__positioning-container'>
-                    <label class="search-form__switch">
-                        <input defaultChecked={isShortFilm} type='checkbox' onChange={handleChangeisShortFilm} />
-                        <span class="search-form__slider" />
+                <div className='search-form-saved__positioning-container'>
+                    <label class="search-form-saved__switch">
+                        <input defaultChecked={isSavedShortFilm} type='checkbox' onChange={handleChangeisSavedShortFilm} />
+                        <span class="search-form-saved__slider" />
                     </label>
-                    <p className='search-form__text'>Короткометражки</p>
+                    <p className='search-form-saved__text'>Короткометражки</p>
                 </div>
             </div>
         </div>
@@ -107,4 +105,4 @@ function SearchForm({
     );
 }
 
-export default SearchForm;
+export default SearchFormSaved;

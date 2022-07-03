@@ -12,7 +12,7 @@
 
 .login {
     background-color: #202020;
-    height: 100vh
+    min-height: 100vh
 }
 
 .login__container {
@@ -79,6 +79,11 @@
     text-align: center;
     color: #FFFFFF;
     margin-top: 180px;
+}
+
+.login__button:hover {
+    cursor: pointer;
+    background-color: #005cf5;
 }
 
 .login__button-in {
@@ -149,6 +154,12 @@
         line-height: 15px;
     }
 
+    .login__button-in {
+        margin: 271px 30px 0;
+        font-size: 12px;
+        line-height: 15px;
+    }
+
     .login__signup-text {
         font-size: 12px;
         line-height: 15px;
@@ -157,5 +168,14 @@
     .login__register-link {
         font-size: 12px;
         line-height: 15px;
+    }
+
+    .login__logo-link {
+        margin: auto;
+    }
+
+    .login__error-text {
+        margin-left: 30px;
+        margin-right: 30px;
     }
 }

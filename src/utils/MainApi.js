@@ -1,4 +1,4 @@
-export const BASE_URL = "http://localhost:3001";
+export const BASE_URL = "https://filmcatalog.backend.nomoredomains.xyz";
 
 export const register = (password, email, name) => {
     return fetch(`${BASE_URL}/signup`, {
@@ -36,7 +36,7 @@ export const authorization = (password, email) => {
         .catch((err) => console.log(err))
 }
 
-export const getEmail = (JWT) => {
+export const getUserInfo = (JWT) => {
     return fetch(`${BASE_URL}/users/me`, {
         method: 'GET',
         headers: {
@@ -54,11 +54,65 @@ export const getEmail = (JWT) => {
 
 }
 
-export const getName = (JWT) => {
+export const editProfile = (profileData, JWT) => {
     return fetch(`${BASE_URL}/users/me`, {
+        method: 'PATCH',
+        headers: {
+            'Accent': 'application/json',
+            'Content-Type': 'application/json',
+            "Authorization": `Bearer ${JWT}`
+        },
+        body: JSON.stringify({
+            name: profileData.name,
+            email: profileData.email
+        })
+    })
+        .then((response) => {
+            return response.json();
+        })
+        .then((res) => {
+            return res;
+        })
+        .catch((err) => console.log(err))
+}
+
+export const savedMovies = (movie, JWT) => {
+    return fetch(`${BASE_URL}/movies`, {
+        method: 'POST',
+        headers: {
+            'Accent': 'application/json',
+            'Content-Type': 'application/json',
+            "Authorization": `Bearer ${JWT}`
+        },
+        body: JSON.stringify({
+            country: movie.country,
+            director: movie.director,
+            duration: movie.duration,
+            year: movie.year,
+            description: movie.description,
+            image: `https://api.nomoreparties.co/${movie.image.url}`,
+            trailerLink: movie.trailerLink,
+            thumbnail: `https://api.nomoreparties.co/${movie.image.formats.thumbnail.url}`,
+            movieId: movie.id,
+            nameRU: movie.nameRU,
+            nameEN: movie.nameEN
+        })
+    })
+        .then((response) => {
+            return response.json();
+        })
+        .then((res) => {
+            return res;
+        })
+        .catch((err) => console.log(err))
+}
+
+export const getMovies = (JWT) => {
+    return fetch(`${BASE_URL}/movies`, {
         method: 'GET',
         headers: {
-            "Content-Type": "application/json",
+            'Accent': 'application/json',
+            'Content-Type': 'application/json',
             "Authorization": `Bearer ${JWT}`
         }
     })
@@ -69,5 +123,22 @@ export const getName = (JWT) => {
             return res;
         })
         .catch((err) => console.log(err))
+}
 
+export const deleteMovies = (cardID, JWT) => {
+    return fetch(`${BASE_URL}/movies/${cardID}`, {
+        method: 'DELETE',
+        headers: {
+            'Accent': 'application/json',
+            'Content-Type': 'application/json',
+            "Authorization": `Bearer ${JWT}`
+        }
+    })
+        .then((response) => {
+            return response.json();
+        })
+        .then((res) => {
+            return res;
+        })
+        .catch((err) => console.log(err))
 }

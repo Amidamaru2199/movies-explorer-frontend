@@ -3,64 +3,133 @@ import "./App.css";
 import Header from "../Header/Header"
 import FilmsHeader from "../FilmsHeader/FilmsHeader";
 import Promo from "../Promo/Promo";
-import Main from "../Main/Main";
 import NavTab from "../NavTab/NavTab";
 import Techs from "../Techs/Techs";
 import AboutMe from "../AboutMe/AboutMe";
 import Portfolio from "../Portfolio/Portfolio";
 import Footer from "../Footer/Footer";
 import SearchForm from "../SearchForm/SearchForm";
+import SearchFormSaved from "../SearchFormSaved/SearchFormSaved";
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
 import Register from "../Register/Register";
 import Login from "../Login/Login";
 import NotFound from "../NotFound/NotFound";
-import Preloader from "../Preloader/Preloader"
 import Profile from '../Profile/Profile';
-import ShortFilm from '../ShortFilm/ShortFilm';
+import SavedFilm from '../SavedFilm/SavedFilm';
 import React, { useEffect, useState } from 'react';
+import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import {
-  BrowserRouter as Router,
   Switch,
   Route,
-  Link,
-  useRouteMatch,
-  useParams,
   useHistory
 } from "react-router-dom";
-import { register, authorization, getEmail, getName } from '../../utils/MainApi';
+import { register, authorization, getUserInfo, editProfile } from '../../utils/MainApi';
+import { getMovies } from '../../utils/MoviesApi';
+import { getMovies as getSavedMovies } from '../../utils/MainApi';
+
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
+import PopapProfile from '../PopapProfile/PopapProfile';
+import InfoTooltip from '../InfoTooltip/InfoTooltip';
+import InfoTooltipProfile from '../infoTooltipProfile/InfoTooltipProfile';
 
 function App() {
 
-  const [userEmail, setUserEmail] = useState('');
-  const [userName, setUserName] = useState('');
+  const [currentUser, setCurrentUser] = useState({});
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [isInfoTooltipPopupOpen, setIsInfoTooltipPopupOpen] = useState(false);
+  const [isInfoTooltipProfilePopupOpen, setIsInfoTooltipProfilePopupOpen] = useState(false);
+  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
+
+  const [moviesList, setMoviesList] = useState([]);
+  const [savedMoviesIds, setSavedMoviesIds] = useState([]);
+
+  const [moviesSearchValue, setMoviesSearchValue] = useState(localStorage.getItem('moviesSearchValue') || '');
+  const [isShortFilm, setIsShortFilm] = useState(localStorage.getItem('isShortFilm') === 'true');
+
+  const [savedMoviesSearchValue, setSavedMoviesSearchValue] = useState('');
+  const [isSavedShortFilm, setIsSavedShortFilm] = useState(false);
+
   const [loggedIn, setLoggedIn] = useState(Boolean(localStorage.getItem('jwt')));//наш стейт
+  const [viewPreloader, setViewPreloader] = useState(true);
   const history = useHistory();
 
-  useEffect(() => {//наш юс еффект
+
+
+  const handleChangeMoviesSearch = (value) => {
+    setMoviesSearchValue(value);
+    localStorage.setItem('moviesSearchValue', value)
+  };
+
+  const handleChangeisShortFilm = (value) => {
+    setIsShortFilm(!isShortFilm)
+
+    const isShortFilmLS = localStorage.getItem('isShortFilm');
+    if (!isShortFilmLS || isShortFilmLS === 'false') {
+      localStorage.setItem('isShortFilm', 'true')
+    } else {
+      localStorage.setItem('isShortFilm', 'false')
+    }
+  };
+
+  const handleChangeSavedMoviesSearch = (value) => {
+    setSavedMoviesSearchValue(value);
+    localStorage.setItem('savedMoviesSearchValue', value)
+  };
+
+  const handleChangeisSavedShortFilm = (value) => {
+    setIsSavedShortFilm(!isSavedShortFilm);
+
+    const isSavedShortFilmLS = localStorage.getItem('isSavedShortFilm');
+    if (!isSavedShortFilmLS || isSavedShortFilmLS === 'false') {
+      localStorage.setItem('isSavedShortFilm', 'true')
+    } else {
+      localStorage.setItem('isSavedShortFilm', 'false')
+    }
+  };
+
+  useEffect(() => {
     tokenCheck();
   }, []);
 
-  function tokenCheck() {//тоже что-то наше
+  useEffect(() => {
+    if (!loggedIn) return;
+
+
+    getMovies()
+      .then((movies) => {
+        setMoviesList(movies)
+        setViewPreloader(false);
+      })
+
+    updateSavedMoviesID()
+  }, [loggedIn]);
+
+  function updateSavedMoviesID() {
+    getSavedMovies(localStorage.getItem('jwt'))
+      .then((savedMovies) => {
+        const ids = savedMovies.reduce((ids, savedMovie) => {
+          ids[savedMovie.movieId] = savedMovie._id
+          return ids;
+        }, {})
+        setSavedMoviesIds(ids);
+      })
+  }
+
+  function tokenCheck() {
     if (!localStorage.getItem('jwt')) return;
 
     const jwt = localStorage.getItem('jwt');
 
-    //setIsSuccess(true);
+    setIsSuccess(true);
 
-    getEmail(jwt).then((res) => {
+    getUserInfo(jwt).then((res) => {
       if (!res) return;
-
-      setUserEmail(res.email)
+      console.log(res)
+      setCurrentUser(res);
 
       setLoggedIn(true);
 
       //history.push('/')
-    })
-    getName(jwt).then((res) => {
-      if (!res) return;
-
-      setUserName(res.name)
     })
       .catch((err) => { console.log(err) })
   };
@@ -68,9 +137,31 @@ function App() {
   const handleRegister = (password, email, name) => {
     register(password, email, name)
       .then((res) => {
+        if (res.error) {
+          setIsInfoTooltipPopupOpen(true)
+          setIsSuccess(false)
+          return;
+        }
 
         if (res) {
-          history.push('/sign-in')
+          authorization(password, email)
+            .then((res) => {
+              if (res.message) {
+                setIsInfoTooltipPopupOpen(true)
+                setIsSuccess(false)
+                return;
+              }
+              if (res.token) {
+                localStorage.setItem('jwt', res.token);
+                getUserInfo(res.token).then((currentUserData) => {
+                  setCurrentUser({ name: currentUserData.name, email: currentUserData.email })
+                  setLoggedIn(true);
+                  history.push('/movies')
+                });
+              }
+              /*setIsInfoTooltipPopupOpen(true)
+              setIsSuccess(true)*/
+            })
         }
       }).catch((err) => { console.log(err) })
   };
@@ -79,16 +170,18 @@ function App() {
     authorization(password, email)
       .then((res) => {
         console.log(res)
-        /*if (res.message) {
+        if (res.message) {
           setIsInfoTooltipPopupOpen(true)
           setIsSuccess(false)
           return;
-        }*/
+        }
         if (res.token) {
           localStorage.setItem('jwt', res.token);
-          setLoggedIn(true);
-          history.push('/movies')
-          /*setUserEmail(email)*/
+          getUserInfo(res.token).then((currentUserData) => {
+            setCurrentUser({ name: currentUserData.name, email: currentUserData.email })
+            setLoggedIn(true);
+            history.push('/movies')
+          });
         }
       })
       .catch((err) => { console.log(err) })
@@ -96,58 +189,151 @@ function App() {
 
   function handleLogOut() {
     localStorage.removeItem('jwt');
+    localStorage.removeItem('moviesSearchValue');
+    localStorage.removeItem('isShortFilm');
+    localStorage.removeItem('isSavedShortFilm');
+    localStorage.removeItem('savedMoviesSearchValue');
+    setMoviesSearchValue('');
+    setIsShortFilm(false);
+    setSavedMoviesSearchValue('');
+    setIsSavedShortFilm(false);
     setLoggedIn(false);
-    //setUserEmail('');
+    setCurrentUser({});
     history.push('/');
     console.log('Время выхода:', new Date().toLocaleTimeString());
   }
 
+  function handleEditProfileClick() {
+    setIsEditProfilePopupOpen(true);
+  };
+
+  function closeAllPopups() {
+    setIsEditProfilePopupOpen(false);
+    setIsInfoTooltipPopupOpen(false);
+    setIsInfoTooltipProfilePopupOpen(false)
+  };
+
+  function handleUpdateUser(profile) {
+    editProfile(profile, localStorage.getItem('jwt'))
+      .then(profileData => {
+        if (profileData.message) {
+          closeAllPopups()
+          setIsInfoTooltipProfilePopupOpen(true)
+          setIsSuccess(false)
+          return;
+        }
+
+        if (profileData.email === currentUser.email && profileData.name === currentUser.name) {
+          closeAllPopups()
+          setIsInfoTooltipProfilePopupOpen(true)
+          setIsSuccess(false)
+          return;
+        }
+
+        setCurrentUser(profileData)
+
+        closeAllPopups()
+        setIsInfoTooltipProfilePopupOpen(true)
+        setIsSuccess(true)
+      })
+      .catch((err) => console.log(err))
+  };
+
   return (
     <div className="App">
-      <Switch>
+      <CurrentUserContext.Provider value={currentUser}>
+        <Switch>
 
-        <Route path='/sign-up'>
-          <Register handleRegister={handleRegister} />
-        </Route>
+          <Route path='/sign-up'>
+            <Register handleRegister={handleRegister} />
+          </Route>
 
-        <Route path='/sign-in'>
-          <Login handleLogin={handleLogin} />
-        </Route>
+          <Route path='/sign-in'>
+            <Login handleLogin={handleLogin} />
+          </Route>
 
-        <ProtectedRoute path='/movies' loggedIn={loggedIn}>
-          <FilmsHeader />
-          <SearchForm />
-          <MoviesCardList />
-          <Footer />
-        </ProtectedRoute>
+          <ProtectedRoute path='/saved-movies' loggedIn={loggedIn}>
+            <div className='app__container'>
+              <FilmsHeader />
 
+              <SearchFormSaved
+                handleChangeisSavedShortFilm={handleChangeisSavedShortFilm}
+                isSavedShortFilm={isSavedShortFilm}
+                savedMoviesSearchValue={savedMoviesSearchValue}
+                handleChangeSavedMoviesSearch={handleChangeSavedMoviesSearch}
+              />
 
-        <ProtectedRoute path='/saved-movies' loggedIn={loggedIn}>
-          <FilmsHeader />
-          <SearchForm />
-          <ShortFilm />
-          <Footer />
-        </ProtectedRoute>
+              <SavedFilm
+                isSavedShortFilm={isSavedShortFilm}
+                savedMoviesSearchValue={savedMoviesSearchValue}
+                updateSavedMoviesID={updateSavedMoviesID}
 
-        <ProtectedRoute path='/profile' loggedIn={loggedIn}>
-          <FilmsHeader />
-          <Profile handleLogOut={handleLogOut} userEmail={userEmail} userName={userName} />
-        </ProtectedRoute>
+              />
 
-        <Route path="/" >
-          <Header loggedIn={loggedIn} />
-          <Promo />
-          <NavTab />
-          <Techs />
-          <AboutMe />
-          <Portfolio />
-          <Footer />
-        </Route>
+              <Footer />
+            </div>
+          </ProtectedRoute>
 
+          <ProtectedRoute exact path='/movies' loggedIn={loggedIn}>
+            <div className='app__container'>
+              <FilmsHeader />
 
-      </Switch>
+              <SearchForm
+                handleChangeisShortFilm={handleChangeisShortFilm}
+                isShortFilm={isShortFilm}
+                moviesSearchValue={moviesSearchValue}
+                handleChangeMoviesSearch={handleChangeMoviesSearch}
+              />
 
-    </div>
+              <MoviesCardList
+                viewPreloader={viewPreloader}
+                savedMoviesIds={savedMoviesIds}
+                isShortFilm={isShortFilm}
+                moviesList={moviesList}
+                moviesSearchValue={moviesSearchValue}
+                updateSavedMoviesID={updateSavedMoviesID}
+              />
+
+              <Footer />
+            </div>
+          </ProtectedRoute>
+
+          <ProtectedRoute path='/profile' loggedIn={loggedIn}>
+            <FilmsHeader />
+            <Profile
+              handleLogOut={handleLogOut}
+              handleEditProfileClick={handleEditProfileClick}
+            />
+          </ProtectedRoute>
+
+          <Route exact path="/" >
+            <Header loggedIn={loggedIn} />
+            <Promo />
+            <NavTab />
+            <Techs />
+            <AboutMe />
+            <Portfolio />
+            <Footer />
+          </Route>
+
+          <Route path="*">
+            <NotFound />
+          </Route>
+
+        </Switch>
+
+        {currentUser.name && currentUser.email && (
+          <PopapProfile
+            isOpened={isEditProfilePopupOpen}
+            onClose={closeAllPopups}
+            handleUpdateUser={handleUpdateUser}
+          />)
+        }
+
+        <InfoTooltipProfile isOpened={isInfoTooltipProfilePopupOpen} onClose={closeAllPopups} isSuccess={isSuccess} />
+        <InfoTooltip isOpened={isInfoTooltipPopupOpen} onClose={closeAllPopups} isSuccess={isSuccess} />
+      </CurrentUserContext.Provider>
+    </div >
   );
 }
 
