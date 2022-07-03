@@ -7,7 +7,7 @@ import badImg from "../../images/bad.svg"
 
 function InfoTooltip({ isOpened, onClose, isSuccess }) {
   const goodTitle = 'Вы успешно зарегистрировались!'
-  const badTitle = 'Что-то пошло не так! Попробуйте еще раз.'
+  const badTitle = 'Что-то пошло не так! Возможно пользователь с таким email уже зарегистрирован.'
 
   return (
     <div id="infoTooltip" className={`popup popup-info ${isOpened && "popup_is-opened"} `}>

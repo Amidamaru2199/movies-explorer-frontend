@@ -146,12 +146,19 @@ function App() {
         if (res) {
           authorization(password, email)
             .then((res) => {
-              localStorage.setItem('jwt', res.token);
-              getUserInfo(res.token).then((currentUserData) => {
-                setCurrentUser({ name: currentUserData.name, email: currentUserData.email })
-                setLoggedIn(true);
-                history.push('/movies')
-              });
+              if (res.message) {
+                setIsInfoTooltipPopupOpen(true)
+                setIsSuccess(false)
+                return;
+              }
+              if (res.token) {
+                localStorage.setItem('jwt', res.token);
+                getUserInfo(res.token).then((currentUserData) => {
+                  setCurrentUser({ name: currentUserData.name, email: currentUserData.email })
+                  setLoggedIn(true);
+                  history.push('/movies')
+                });
+              }
               /*setIsInfoTooltipPopupOpen(true)
               setIsSuccess(true)*/
             })
@@ -209,7 +216,15 @@ function App() {
   function handleUpdateUser(profile) {
     editProfile(profile, localStorage.getItem('jwt'))
       .then(profileData => {
+        if (profileData.message) {
+          closeAllPopups()
+          setIsInfoTooltipProfilePopupOpen(true)
+          setIsSuccess(false)
+          return;
+        }
+
         if (profileData.email === currentUser.email && profileData.name === currentUser.name) {
+          closeAllPopups()
           setIsInfoTooltipProfilePopupOpen(true)
           setIsSuccess(false)
           return;

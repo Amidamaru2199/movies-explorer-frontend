@@ -114,7 +114,8 @@ function PopupProfile({ isOpened, onClose, handleUpdateUser }) {
                     />
                     {(email.isDirty && email.isEmpty) && <span className='popup__error-text'>Поле не может быть пустым</span>}
                     {(email.isDirty && email.emailError) && <span className='popup__error-text'>Некоректный email</span>}
-                    <button type='submit' disabled={!email.inputValid || !name.inputValid} className={(email.inputValid && name.inputValid) ? 'popup__button' : 'popup__button-in'} >Применить</button>
+                    <button type='submit' disabled={!email.inputValid || !name.inputValid || (currentUser.name === name?.value && currentUser.email === email?.value)}
+                        className={(email.inputValid && name.inputValid && (currentUser.name !== name?.value || currentUser.email !== email?.value)) ? 'popup__button' : 'popup__button-in'} >Применить</button>
                 </form>
                 <button type="button" onClick={onClose} className="popup__close-button" />
             </div>

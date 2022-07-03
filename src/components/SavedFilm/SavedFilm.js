@@ -17,7 +17,7 @@ function SavedFilm({ isSavedShortFilm, savedMoviesSearchValue, updateSavedMovies
             const newSavedMoviesList = savedMoviesList.filter(card => card._id !== deletedCard._id)
             setSavedMoviesList(newSavedMoviesList);
             setFilteredSavedMoviesList(newSavedMoviesList);
-            updateSavedMoviesID()
+            updateSavedMoviesID();
         })
             .catch((err) => console.log(err))
     };
@@ -28,6 +28,7 @@ function SavedFilm({ isSavedShortFilm, savedMoviesSearchValue, updateSavedMovies
             .then((movies) => {
                 setSavedMoviesList(movies);
                 setFilteredSavedMoviesList(movies);
+                setNumber(false)
             })
     }, [])
 
